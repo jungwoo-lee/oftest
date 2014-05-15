@@ -10,7 +10,6 @@ Test cases in other modules depend on this functionality.
 """
 
 import logging
-
 from oftest import config
 import oftest.base_tests as base_tests
 import ofp
@@ -560,6 +559,8 @@ class AsyncConfigGet(base_tests.SimpleProtocol):
         response, _ = self.controller.transact(ofp.message.async_get_request())
         self.assertTrue(response != None, "No response to get async config request")
         logging.info(response.show())
+        #self.assertTrue(response.subtypes[1] is not error_msg,
+        #                "response with an error")
         self.assertEquals(response.packet_in_mask_equal_master & 0x07, 0x07)
         self.assertEquals(response.port_status_mask_equal_master & 0x07, 0x07)
         self.assertEquals(response.flow_removed_mask_equal_master & 0x0f, 0x0f)
