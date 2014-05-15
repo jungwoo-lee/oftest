@@ -64,14 +64,15 @@ config_default = {
     "test_dir"           : None,
 
     # Switch connection options
-    "controller_host"    : "0.0.0.0",  # For passive bind
+    "controller_host"    : "150.225.14.201",  # For passive bind
     "controller_port"    : 6653,
     "switch_ip"          : None,  # If not none, actively connect to switch
-    "platform"           : "eth",
+    # "switch_ip"          : "150.225.14.207",  # If set, the controller uses a port other than 6633, causing an error condition
+    "platform"           : "pica8",
     "platform_args"      : None,
     "platform_dir"       : os.path.join(root_dir, "platforms"),
     "interfaces"         : [],
-    "openflow_version"   : "1.0",
+    "openflow_version"   : "1.3",
 
     # Logging options
     "log_file"           : "oft.log",
@@ -362,6 +363,27 @@ def _space_to(n, str):
         return " " * spaces
     return " "
 
+def log_result():
+    # move the logs into a test directory
+    logDate = time.strftime("%m%d%Y")
+    logTime = time.strftime("%H.%M.%S")
+
+    logDir = os.path.join(root_dir, 'experiments', logDate, args[0], logTime)
+    if not os.path.exists(logDir):
+        os.makedirs(logDir)
+    # move logs file
+    logSrc = root_dir + "/" + config["log_file"]
+    logDst = logDir + "/" + config["log_file"]
+
+    pcapFilename = os.path.splitext(config["log_file"])[0] + '.pcap'
+    pcapSrc = root_dir + "/" + pcapFilename
+    pcapDst = logDir + "/" + pcapFilename
+
+    import shutil
+    shutil.copyfile(logSrc, logDst)
+    shutil.copyfile(pcapSrc, pcapDst)
+    print logDir
+
 #
 # Main script
 #
@@ -387,6 +409,7 @@ test_specs = args
 if config["test_spec"] != "":
     print >> sys.stderr, "WARNING: The --test-spec option is deprecated"
     test_specs += config["test_spec"].split(',')
+
 if config["test_file"] != None:
     with open(config["test_file"], 'r') as f:
         for line in f:
@@ -398,7 +421,6 @@ if test_specs == []:
     test_specs = ["standard"]
 
 test_modules = load_test_modules(config)
-
 # Check if test list is requested; display and exit if so
 if config["list"]:
     mod_count = 0
@@ -454,7 +476,6 @@ group or their module's test group."""
     sys.exit(0)
 
 test_modules = prune_tests(test_specs, test_modules, config["openflow_version"])
-
 # Check if test list is requested; display and exit if so
 if config["list_test_names"]:
     for (modname, (mod, tests)) in test_modules.items():
@@ -549,6 +570,10 @@ if __name__ == "__main__":
 
     if result.failures or result.errors:
         # exit(1) hangs sometimes
+        log_result()
         os._exit(1)
     if oftest.testutils.skipped_test_count > 0 and config["fail_skipped"]:
+        log_result()
         os._exit(1)
+log_result()
+
