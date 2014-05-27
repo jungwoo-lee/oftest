@@ -126,6 +126,23 @@ def simple_tcp_packet(pktlen=100,
 
     pkt = pkt/("D" * (pktlen - len(pkt)))
 
+    logging.info("tcp packet : " + 
+                      "eth_dst = " + str(eth_dst) + "\n" + 
+                      "eth_src = " + str(eth_src) + "\n" + 
+                      "dl_vlan_enable = %d"+ "\n" + 
+                      "vlan_vid = %d " + "\n" + 
+                      #"vlan_pcp = %d " + "\n" + 
+                      #"dl_vlan_cfi = %d" + "\n" + 
+                      #"ip_src = " + str(ip_src) + "\n" + 
+                      #"ip_dst = " + str(ip_dst) + "\n" + 
+                      #"ip_tos = %d" + "\n" + 
+                      #"ip_ttl = %d" + "\n" + 
+                      #"tcp_sport = %d" + "\n" + 
+                      #"tcp_dport = %d" + "\n" + 
+                      #"ip_ihl = %d" + "\n" + 
+                      #"ip_options = %d", 
+                      %(dl_vlan_enable, vlan_vid)
+                      )
     return pkt
 
 def simple_tcpv6_packet(pktlen=100,
