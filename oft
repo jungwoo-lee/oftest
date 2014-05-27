@@ -378,12 +378,17 @@ def log_result():
     logSrc = root_dir + "/" + config["log_file"]
     logDst = logDir + "/" + config["log_file"]
 
+    infoFilename = os.path.splitext(config["log_file"])[0] + '.info'
+    infoSrc = root_dir + "/" + infoFilename
+    infoDst = logDir + "/" + infoFilename
+
     pcapFilename = os.path.splitext(config["log_file"])[0] + '.pcap'
     pcapSrc = root_dir + "/" + pcapFilename
     pcapDst = logDir + "/" + pcapFilename
 
     import shutil
     shutil.copyfile(logSrc, logDst)
+    shutil.copyfile(infoSrc, infoDst)
     shutil.copyfile(pcapSrc, pcapDst)
     print logDir
 
