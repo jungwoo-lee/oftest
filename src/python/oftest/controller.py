@@ -679,8 +679,8 @@ class Controller(Thread):
 	# the following lines are modified by jungwoo
 	q = PrettyPrinter(maxwidth=200)
 	msg.pretty_print(q)
-	self.logger.info("Command %d", self.sent_commands)
-	self.logger.info("%s", q.__str__())
+	self.logger.info("----- Command %d -----", self.sent_commands)
+	self.logger.info("%s\n", q.__str__())
 	self.sent_commands+=1
 
         with self.tx_lock:

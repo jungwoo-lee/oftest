@@ -239,8 +239,10 @@ def logging_setup(config):
     else:
         if os.path.exists(config["log_file"]):
             os.remove(config["log_file"])
+        if os.path.exists(config["info_log_file"]):
+            os.remove(config["info_log_file"])
 
-    oftest.open_logfile('main')
+    #oftest.open_logfile('main')
 
 def pcap_setup(config):
     """
@@ -553,7 +555,7 @@ if __name__ == "__main__":
 
     logging.info("*** TEST RUN START: " + time.asctime())
     result = unittest.TextTestRunner(verbosity=2).run(suite)
-    oftest.open_logfile('main')
+    #oftest.open_logfile('main')
     if oftest.testutils.skipped_test_count > 0:
         ts = " tests"
         if oftest.testutils.skipped_test_count == 1: ts = " test"

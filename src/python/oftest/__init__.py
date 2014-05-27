@@ -11,12 +11,6 @@ config = {}
 # Populated by oft.
 dataplane_instance = None
 
-# by jungwoo
-class LevelFilter(logging.Filter):
-    def __init__(self, level):
-        self.level = level
-    def filter(self, record):
-        return record.levelno == self.level
 
 def open_logfile(name):
     """
@@ -43,14 +37,30 @@ def open_logfile(name):
     for handler in logger.handlers:
         logger.removeHandler(handler)
         handler.close()
-
     # Add a new handler
-    handler = logging.FileHandler(filename, mode='a')
-    handler.setFormatter(logging.Formatter(_format, _datefmt))
-    logger.addHandler(handler)
+    #handler = logging.FileHandler(filename, mode='a')
+    #handler.setFormatter(logging.Formatter(_format, _datefmt))
+    #logger.addHandler(handler)
 
     # Add an info handler (by jungwoo)
+    handler = logging.FileHandler(filename, mode='a')
     info_handler = logging.FileHandler(info_filename, mode='a')
+
+    handler.setFormatter(logging.Formatter(_format, _datefmt))
     info_handler.setFormatter(logging.Formatter(_info_format, _datefmt))
-    info_handler.addFilter(LevelFilter(logging.INFO))
+
+    logger.addHandler(handler)
     logger.addHandler(info_handler)
+
+    # by jungwoo
+    class LevelFilter(logging.Filter):
+        def __init__(self, level):
+            self.level = level
+        def filter(self, record):
+            return record.levelno == self.level
+
+    handler.addFilter(LevelFilter(logging.DEBUG))
+    info_handler.addFilter(LevelFilter(logging.INFO))
+
+
+
