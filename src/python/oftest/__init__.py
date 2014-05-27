@@ -59,7 +59,7 @@ def open_logfile(name):
         def filter(self, record):
             return record.levelno == self.level
 
-    handler.addFilter(LevelFilter(logging.DEBUG))
+    # handler.addFilter(LevelFilter(logging.DEBUG))
     info_handler.addFilter(LevelFilter(logging.INFO))
 
 
