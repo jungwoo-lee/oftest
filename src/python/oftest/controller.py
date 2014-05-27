@@ -36,6 +36,7 @@ import logging
 from threading import Thread
 from threading import Lock
 from threading import Condition
+from loxi.pp import PrettyPrinter
 
 import ofutils
 import loxi
@@ -118,6 +119,7 @@ class Controller(Thread):
         self.packets_expired = 0
         self.packets_handled = 0
         self.poll_discards = 0
+	self.sent_commands = 0 # added by jungwoo
 
         # State
         self.sync = Lock()
@@ -673,6 +675,13 @@ class Controller(Thread):
 
         self.logger.debug("Msg out: version %d class %s len %d xid %d",
                           msg.version, type(msg).__name__, len(outpkt), msg.xid)
+
+	# the following lines are modified by jungwoo
+	q = PrettyPrinter(maxwidth=200)
+	msg.pretty_print(q)
+	self.logger.info("Command %d", self.sent_commands)
+	self.logger.info("%s", q.__str__())
+	self.sent_commands+=1
 
         with self.tx_lock:
             if self.switch_socket.sendall(outpkt) is not None:

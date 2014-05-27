@@ -1,0 +1,167 @@
+++++++++ Tue May 27 11:29:43 2014 ++++++++
+Importing platform: pica8
+OF port map: {4: 'oftest_eth2', 5: 'eth1'}
+Autogen random seed: 5604062
+*** TEST RUN START: Tue May 27 11:29:43 2014
+** START TEST CASE match.IPv4ICMPCode
+** START TEST CASE match.IPv4ICMPCode
+Create/listen at 150.225.14.201:6653
+Create/listen at 150.225.14.201:6653
+150.225.14.201:6653: Incoming connection from ('150.225.14.207', 49617)
+150.225.14.201:6653: Incoming connection from ('150.225.14.207', 49617)
+Command 0
+Command 0
+hello { xid = 0xea1ed4d6, elements = [ ] }
+hello { xid = 0xea1ed4d6, elements = [ ] }
+Connected ('150.225.14.207', 49617)
+Connected ('150.225.14.207', 49617)
+Command 1
+Command 1
+features_request { xid = 0x5b4defae }
+features_request { xid = 0x5b4defae }
+Running match test for match_v3 {
+  oxm_list = [
+    eth_type { value = 0x800 },
+    ip_proto { value = 0x1 },
+    icmpv4_code { value = 0x2 }
+  ]
+}
+Running match test for match_v3 {
+  oxm_list = [
+    eth_type { value = 0x800 },
+    ip_proto { value = 0x1 },
+    icmpv4_code { value = 0x2 }
+  ]
+}
+Deleting all flows
+Deleting all flows
+Command 2
+Command 2
+flow_delete {
+  xid = 0xfda90de4,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0xff,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x0,
+  buffer_id = 0xffffffff,
+  out_port = OFPP_ANY,
+  out_group = 0xffffffff,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ ]
+}
+flow_delete {
+  xid = 0xfda90de4,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0xff,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x0,
+  buffer_id = 0xffffffff,
+  out_port = OFPP_ANY,
+  out_group = 0xffffffff,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ ]
+}
+Command 3
+Command 3
+barrier_request { xid = 0x3e7ce724 }
+barrier_request { xid = 0x3e7ce724 }
+Inserting flow sending matching packets to port 5
+Inserting flow sending matching packets to port 5
+Command 4
+Command 4
+flow_add {
+  xid = 0xdb89b217,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0x0,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x3e8,
+  buffer_id = 0xffffffff,
+  out_port = 0,
+  out_group = 0x0,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ eth_type { value = 0x800 }, ip_proto { value = 0x1 }, icmpv4_code { value = 0x2 } ] },
+  instructions = [ apply_actions { actions = [ output { port = 5, max_len = 0xffff } ] } ]
+}
+flow_add {
+  xid = 0xdb89b217,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0x0,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x3e8,
+  buffer_id = 0xffffffff,
+  out_port = 0,
+  out_group = 0x0,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ eth_type { value = 0x800 }, ip_proto { value = 0x1 }, icmpv4_code { value = 0x2 } ] },
+  instructions = [ apply_actions { actions = [ output { port = 5, max_len = 0xffff } ] } ]
+}
+Command 5
+Command 5
+echo_reply { xid = 0x0, data = '' }
+echo_reply { xid = 0x0, data = '' }
+Inserting match-all flow sending packets to controller
+Inserting match-all flow sending packets to controller
+Command 6
+Command 6
+flow_add {
+  xid = 0x14abeb0b,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0x0,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x1,
+  buffer_id = 0xffffffff,
+  out_port = 0,
+  out_group = 0x0,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ apply_actions { actions = [ output { port = OFPP_CONTROLLER, max_len = 0xffff } ] } ]
+}
+flow_add {
+  xid = 0x14abeb0b,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0x0,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x1,
+  buffer_id = 0xffffffff,
+  out_port = 0,
+  out_group = 0x0,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ apply_actions { actions = [ output { port = OFPP_CONTROLLER, max_len = 0xffff } ] } ]
+}
+Command 7
+Command 7
+barrier_request { xid = 0x1e23efc3 }
+barrier_request { xid = 0x1e23efc3 }
+Sending matching packet 'type=5 code=2', expecting output to port 5
+Sending matching packet 'type=5 code=2', expecting output to port 5
+Sending matching packet 'type=3 code=2', expecting output to port 5
+Sending matching packet 'type=3 code=2', expecting output to port 5
+Sending non-matching packet 'type=2 code=1', expecting packet-in
+Sending non-matching packet 'type=2 code=1', expecting packet-in
+Ignoring listen soc shutdown error
+Exiting controller thread
+Ignoring listen soc shutdown error
+Exiting controller thread
+Ignoring switch soc shutdown error
+Ignoring switch soc shutdown error
+Ignoring listen soc shutdown error
+Ignoring listen soc shutdown error
+** END TEST CASE match.IPv4ICMPCode
+** END TEST CASE match.IPv4ICMPCode
+*** TEST RUN END  : Tue May 27 11:29:51 2014
+Thread exit

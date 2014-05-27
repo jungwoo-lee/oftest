@@ -76,6 +76,7 @@ config_default = {
 
     # Logging options
     "log_file"           : "oft.log",
+    "info_log_file"      : "oft.info", # jungwoo
     "log_dir"            : None,
     "debug"              : "verbose",
     "profile"            : False,

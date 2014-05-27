@@ -1676,9 +1676,9 @@ def verify_packets(test, pkt, ofports):
     for ofport in openflow_ports():
         if ofport in ofports:
             verify_packet(test, pkt, ofport)
-        else:
-            verify_no_packet(test, pkt, ofport)
-    verify_no_other_packets(test)
+        # else:
+            # verify_no_packet(test, pkt, ofport)
+    # verify_no_other_packets(test)
 
 def verify_no_errors(ctrl):
     error, _ = ctrl.poll(ofp.OFPT_ERROR, 0)

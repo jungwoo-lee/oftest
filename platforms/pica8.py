@@ -19,6 +19,7 @@ def platform_config_update(config):
     # Default to a veth configuration compatible with the reference switch
     if not port_map:
         port_map = {
+            4: 'oftest_eth2',
             5: 'eth1',
         }
 

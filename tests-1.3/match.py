@@ -9,7 +9,8 @@ single output.
 """
 
 import logging
-
+import time
+from loxi.pp import PrettyPrinter
 from oftest import config
 import oftest.base_tests as base_tests
 import ofp
@@ -54,6 +55,11 @@ class MatchTest(base_tests.SimpleDataPlane):
                 buffer_id=ofp.OFP_NO_BUFFER,
                 priority=1000)
         self.controller.message_send(request)
+	#q = PrettyPrinter(maxwidth=200)
+	#request.pretty_print(q)
+	#print (q.__str__())
+
+	time.sleep(5)
 
         logging.info("Inserting match-all flow sending packets to controller")
         request = ofp.message.flow_add(

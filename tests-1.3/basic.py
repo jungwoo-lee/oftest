@@ -13,6 +13,7 @@ import logging
 from oftest import config
 import oftest.base_tests as base_tests
 import ofp
+import time
 
 from oftest.testutils import *
 
@@ -67,6 +68,7 @@ class DefaultDrop(base_tests.SimpleDataPlane):
     """
     def runTest(self):
         in_port, = openflow_ports(1)
+	print in_port
         delete_all_flows(self.controller)
 
         pkt = str(simple_tcp_packet())
@@ -251,9 +253,9 @@ class PacketInMiss(base_tests.SimpleDataPlane):
             buffer_id=ofp.OFP_NO_BUFFER,
             priority=0)
 
-        logging.info("Inserting table-miss flow sending all packets to controller")
-        self.controller.message_send(request)
-        do_barrier(self.controller)
+        #logging.info("Inserting table-miss flow sending all packets to controller")
+        #self.controller.message_send(request)
+        #do_barrier(self.controller)
 
         for of_port in config["port_map"].keys():
             logging.info("PacketInMiss test, port %d", of_port)

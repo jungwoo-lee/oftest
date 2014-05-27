@@ -315,12 +315,27 @@ class DataPlane(Thread):
         if exp_pkt and not port_number:
             self.logger.warn("Dataplane poll with exp_pkt but no port number")
 
+	FILTER=''.join([(len(repr(chr(x)))==3) and chr(x) or '.' for x in range(256)])
+        def hex_dump_buffer(src, length=16):
+            result = ["\n"]
+	    for i in xrange(0, len(src), length):
+	        chars = src[i:i+length]
+                hex = ' '.join(["%02x" % ord(x) for x in chars])
+		printable = ''.join(["%s" % ((ord(x) <= 127 and FILTER[ord(x)]) or '.') for x in chars])
+		result.append("%04x  %-*s %s\n" % (i, length*3, hex, printable))
+	    return ''.join(result)
+
+	def format_packet(pkt):
+	    return "Packet length %d \n%s" % (len(str(pkt)), 
+	                                          hex_dump_buffer(str(pkt)))
+
         # Retrieve the packet. Returns (port number, packet, time).
         def grab():
             self.logger.debug("Grabbing packet")
             for (rcv_port_number, pkt, time) in self.packets(port_number):
                 self.logger.debug("Checking packet from port %d", rcv_port_number)
                 if not exp_pkt or match_exp_pkt(exp_pkt, pkt):
+            	    self.logger.debug("matched %s",format_packet(exp_pkt))
                     return (rcv_port_number, pkt, time)
             self.logger.debug("Did not find packet")
             return None
