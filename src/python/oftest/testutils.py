@@ -20,7 +20,7 @@ skipped_test_count = 0
 # variables used in generating test steps
 global test_step_count 
 test_step_count = 1
-global test_step_noneStep = []
+global test_step_noneStep
 test_step_noneStep = [0, 3, 5]
 
 
