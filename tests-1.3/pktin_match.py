@@ -32,7 +32,7 @@ class PktinMatchTest(base_tests.SimpleDataPlane):
         in_port, = openflow_ports(1)
         pktstr = str(pkt)
 
-        logging.debug("Inserting match-all flow sending packets to controller")
+        logging.debug("(Inserting match-all flow sending packets to controller)")
         request = ofp.message.flow_add(
             table_id=test_param_get("table", 0),
             instructions=[

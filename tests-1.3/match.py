@@ -62,7 +62,7 @@ class MatchTest(base_tests.SimpleDataPlane):
 
 	time.sleep(5)
 
-        logging.info("Inserting match-all flow sending packets to controller")
+        logging.info("(Inserting match-all flow sending packets to controller)")
         request = ofp.message.flow_add(
             table_id=table_id,
             instructions=[

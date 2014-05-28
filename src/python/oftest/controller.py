@@ -684,7 +684,7 @@ class Controller(Thread):
 	        self.logger.info("----- Test Step %d -----", oftest.testutils.test_step_count)
 	        oftest.testutils.test_step_count+=1
         else:
-            self.logger.info("Setup Procedure")
+            self.logger.info("----- Message Sen† By Controller (not a test step) -----")
     
         self.logger.info("%s\n", q.__str__())
 
