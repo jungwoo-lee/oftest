@@ -676,13 +676,17 @@ class Controller(Thread):
         self.logger.debug("Msg out: version %d class %s len %d xid %d",
                           msg.version, type(msg).__name__, len(outpkt), msg.xid)
 
-	# the following lines are modified by jungwoo
-	q = PrettyPrinter(maxwidth=200)
-	msg.pretty_print(q)
-        self.logger.info("message type %d ", msg.type)
-	self.logger.info("----- Test Step %d -----", oftest.testutils.test_step_count)
-	self.logger.info("%s\n", q.__str__())
-	oftest.testutils.test_step_count+=1
+        # the following lines are modified by jungwoo
+	    q = PrettyPrinter(maxwidth=200)
+	    msg.pretty_print(q)
+        self.logger.debug("(message type = %d)", msg.type)
+        if msg.type not in oftest.testutils.test_step_noneStep :
+	        self.logger.info("----- Test Step %d -----", oftest.testutils.test_step_count)
+	        oftest.testutils.test_step_count+=1
+        else:
+            self.logger.info("Setup Procedure")
+    
+        self.logger.info("%s\n", q.__str__())
 
         with self.tx_lock:
             if self.switch_socket.sendall(outpkt) is not None:

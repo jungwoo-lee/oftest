@@ -16,8 +16,13 @@ import ofp
 global skipped_test_count
 skipped_test_count = 0
 
-global test_step_count # by jungwoo
-test_step_count = 0
+# added by jungwoo
+# variables used in generating test steps
+global test_step_count 
+test_step_count = 1
+global test_step_noneStep = []
+test_step_noneStep = [0, 3, 5]
+
 
 _import_blacklist = set(locals().keys())
 
@@ -35,7 +40,7 @@ def delete_all_flows(ctrl, send_barrier=True):
     @param send_barrier Whether or not to send a barrier message
     """
 
-    logging.info("Deleting all flows")
+    logging.info("(Deleting all flows)")
     msg = ofp.message.flow_delete()
     if ofp.OFP_VERSION in [1, 2]:
         msg.match.wildcards = ofp.OFPFW_ALL

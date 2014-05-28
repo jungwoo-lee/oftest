@@ -107,7 +107,7 @@ class OutputExact(base_tests.SimpleDataPlane):
                     buffer_id=ofp.OFP_NO_BUFFER,
                     priority=1000)
 
-            logging.info("Inserting flow sending matching packets to port %d", out_port)
+            logging.info("(Inserting flow sending matching packets to port %d)", out_port)
             self.controller.message_send(request)
             do_barrier(self.controller)
 
@@ -184,7 +184,7 @@ class PacketInExact(base_tests.SimpleDataPlane):
             buffer_id=ofp.OFP_NO_BUFFER,
             priority=1000)
 
-        logging.info("Inserting flow sending matching packets to controller")
+        logging.info("(Inserting flow sending matching packets to controller)")
         self.controller.message_send(request)
         do_barrier(self.controller)
 

@@ -43,7 +43,7 @@ class MatchTest(base_tests.SimpleDataPlane):
 
         delete_all_flows(self.controller)
 
-        logging.info("Inserting flow sending matching packets to port %d", out_port)
+        logging.info("(Inserting flow sending matching packets to port %d)", out_port)
         request = ofp.message.flow_add(
                 table_id=table_id,
                 match=match,
@@ -119,7 +119,7 @@ class InPort(base_tests.SimpleDataPlane):
 
         delete_all_flows(self.controller)
 
-        logging.info("Inserting flow sending matching packets to port %d", out_port)
+        logging.info("(Inserting flow sending matching packets to port %d)", out_port)
         request = ofp.message.flow_add(
                 table_id=table_id,
                 match=match,
@@ -133,7 +133,7 @@ class InPort(base_tests.SimpleDataPlane):
                 priority=1000)
         self.controller.message_send(request)
 
-        logging.info("Inserting match-all flow sending packets to controller")
+        logging.info("(Inserting match-all flow sending packets to controller)")
         request = ofp.message.flow_add(
             table_id=table_id,
             instructions=[
