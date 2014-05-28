@@ -677,12 +677,12 @@ class Controller(Thread):
                           msg.version, type(msg).__name__, len(outpkt), msg.xid)
 
         # the following lines are modified by jungwoo
-	    q = PrettyPrinter(maxwidth=200)
-	    msg.pretty_print(q)
+        q = PrettyPrinter(maxwidth=200)
+        msg.pretty_print(q)
         self.logger.debug("(message type = %d)", msg.type)
         if msg.type not in oftest.testutils.test_step_noneStep :
-	        self.logger.info("----- Test Step %d -----", oftest.testutils.test_step_count)
-	        oftest.testutils.test_step_count+=1
+            self.logger.info("----- Test Step %d -----", oftest.testutils.test_step_count)
+            oftest.testutils.test_step_count+=1
         else:
             self.logger.info("----- Message Sen† By Controller (not a test step) -----")
     
