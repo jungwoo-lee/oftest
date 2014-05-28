@@ -40,6 +40,7 @@ from loxi.pp import PrettyPrinter
 
 import ofutils
 import loxi
+import oftest
 
 # Configured openflow version
 import ofp as cfg_ofp
@@ -119,7 +120,6 @@ class Controller(Thread):
         self.packets_expired = 0
         self.packets_handled = 0
         self.poll_discards = 0
-	self.sent_commands = 0 # added by jungwoo
 
         # State
         self.sync = Lock()
@@ -679,9 +679,9 @@ class Controller(Thread):
 	# the following lines are modified by jungwoo
 	q = PrettyPrinter(maxwidth=200)
 	msg.pretty_print(q)
-	self.logger.info("----- Command %d -----", self.sent_commands)
+	self.logger.info("----- Test Step %d -----", oftest.testutils.test_step_count)
 	self.logger.info("%s\n", q.__str__())
-	self.sent_commands+=1
+	oftest.testutils.test_step_count+=1
 
         with self.tx_lock:
             if self.switch_socket.sendall(outpkt) is not None:

@@ -11,6 +11,7 @@ single output.
 import logging
 import time
 from loxi.pp import PrettyPrinter
+import oftest
 from oftest import config
 import oftest.base_tests as base_tests
 import ofp
@@ -76,8 +77,19 @@ class MatchTest(base_tests.SimpleDataPlane):
 
         do_barrier(self.controller)
 
-        for name, pkt in matching.items():
+        #for name, pkt in matching.items():
+        for name, pkt_info in matching.items():
+	    len_pkt_info = len(pkt_info)
+	    if len_pkt_info == 1:
+	        pkt = pkt_info 
+	    elif len_pkt_info == 2:
+	        pkt = pkt_info[0]
+	        debug_str = pkt_info[1]
+	    logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
             logging.info("Sending matching packet %s, expecting output to port %d", repr(name), out_port)
+
+	    if len_pkt_info == 2:
+	        logging.info(debug_str) 
             pktstr = str(pkt)
             self.dataplane.send(in_port, pktstr)
             verify_packets(self, pktstr, [out_port])

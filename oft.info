@@ -1,22 +1,22 @@
 ** START TEST CASE match.EthSrcMasked
 Create/listen at 150.225.14.201:6653
-150.225.14.201:6653: Incoming connection from ('150.225.14.207', 50293)
------ Command 0 -----
-hello { xid = 0xdbd2b20d, elements = [ ] }
+150.225.14.201:6653: Incoming connection from ('150.225.14.207', 43102)
+----- Test Step 0 -----
+hello { xid = 0xb40166f4, elements = [ ] }
 
-Connected ('150.225.14.207', 50293)
------ Command 1 -----
-features_request { xid = 0x72042a3b }
+Connected ('150.225.14.207', 43102)
+----- Test Step 1 -----
+features_request { xid = 0x5530e32 }
 
 Running match test for match_v3 {
   oxm_list = [
-    eth_src_masked { value = 00:01:02:03:04:05, value_mask = 00:ff:ff:ff:ff:ff }
+    eth_src_masked { value = 00:01:02:03:04:05, value_mask = 00:ff:ff:0f:ff:ff }
   ]
 }
 Deleting all flows
------ Command 2 -----
+----- Test Step 2 -----
 flow_delete {
-  xid = 0x43739a79,
+  xid = 0x7d606b76,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0xff,
@@ -31,13 +31,13 @@ flow_delete {
   instructions = [ ]
 }
 
------ Command 3 -----
-barrier_request { xid = 0x312d13ce }
+----- Test Step 3 -----
+barrier_request { xid = 0x72c4f7d1 }
 
 Inserting flow sending matching packets to port 5
------ Command 4 -----
+----- Test Step 4 -----
 flow_add {
-  xid = 0xe1d2265e,
+  xid = 0x2ae42bf5,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -48,17 +48,17 @@ flow_add {
   out_port = 0,
   out_group = 0x0,
   flags = 0x0,
-  match = match_v3 { oxm_list = [ eth_src_masked { value = 00:01:02:03:04:05, value_mask = 00:ff:ff:ff:ff:ff } ] },
+  match = match_v3 { oxm_list = [ eth_src_masked { value = 00:01:02:03:04:05, value_mask = 00:ff:ff:0f:ff:ff } ] },
   instructions = [ apply_actions { actions = [ output { port = 5, max_len = 0xffff } ] } ]
 }
 
------ Command 5 -----
+----- Test Step 5 -----
 echo_reply { xid = 0x0, data = '' }
 
 Inserting match-all flow sending packets to controller
------ Command 6 -----
+----- Test Step 6 -----
 flow_add {
-  xid = 0xf1cbb26a,
+  xid = 0x77b0d0cf,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -73,14 +73,51 @@ flow_add {
   instructions = [ apply_actions { actions = [ output { port = OFPP_CONTROLLER, max_len = 0xffff } ] } ]
 }
 
------ Command 7 -----
-barrier_request { xid = 0x4556119c }
+----- Test Step 7 -----
+barrier_request { xid = 0x589eb410 }
 
+----- Test Step 8 -----
 Sending matching packet 'ff:01:02:f3:04:05', expecting output to port 5
-Ignoring listen soc shutdown error
+
+	TCP packet : 
+		eth_dst = 00:01:02:03:04:05
+		eth_src = ff:01:02:f3:04:05
+		dl_vlan_enable = False
+		vlan_vid = 0
+		vlan_pcp = 0
+		dl_vlan_cfi = 0
+		ip_src = 192.168.0.1
+		ip_dst = 192.168.0.2
+		ip_tos = 0
+		ip_ttl = 64
+		tcp_sport = 1234
+		tcp_dport = 80
+		ip_ihl = None
+		ip_options = False
+
+----- Test Step 8 -----
+Sending matching packet '00:01:02:03:04:05', expecting output to port 5
+
+	TCP packet : 
+		eth_dst = 00:01:02:03:04:05
+		eth_src = 00:01:02:03:04:05
+		dl_vlan_enable = False
+		vlan_vid = 0
+		vlan_pcp = 0
+		dl_vlan_cfi = 0
+		ip_src = 192.168.0.1
+		ip_dst = 192.168.0.2
+		ip_tos = 0
+		ip_ttl = 64
+		tcp_sport = 1234
+		tcp_dport = 80
+		ip_ihl = None
+		ip_options = False
+
 Exiting controller thread
 Ignoring switch soc shutdown error
 Ignoring listen soc shutdown error
+Ignoring listen soc shutdown error
 ** END TEST CASE match.EthSrcMasked
-*** TEST RUN END  : Tue May 27 14:43:21 2014
+*** TEST RUN END  : Tue May 27 17:18:56 2014
 Thread exit

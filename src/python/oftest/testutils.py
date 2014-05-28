@@ -16,6 +16,9 @@ import ofp
 global skipped_test_count
 skipped_test_count = 0
 
+global test_step_count # by jungwoo
+test_step_count = 0
+
 _import_blacklist = set(locals().keys())
 
 # Some useful defines
@@ -126,24 +129,25 @@ def simple_tcp_packet(pktlen=100,
 
     pkt = pkt/("D" * (pktlen - len(pkt)))
 
-    logging.info("tcp packet : " + 
-                      "eth_dst = " + str(eth_dst) + "\n" + 
-                      "eth_src = " + str(eth_src) + "\n" + 
-                      "dl_vlan_enable = %d"+ "\n" + 
-                      "vlan_vid = %d " + "\n" + 
-                      #"vlan_pcp = %d " + "\n" + 
-                      #"dl_vlan_cfi = %d" + "\n" + 
-                      #"ip_src = " + str(ip_src) + "\n" + 
-                      #"ip_dst = " + str(ip_dst) + "\n" + 
-                      #"ip_tos = %d" + "\n" + 
-                      #"ip_ttl = %d" + "\n" + 
-                      #"tcp_sport = %d" + "\n" + 
-                      #"tcp_dport = %d" + "\n" + 
-                      #"ip_ihl = %d" + "\n" + 
-                      #"ip_options = %d", 
-                      %(dl_vlan_enable, vlan_vid)
-                      )
-    return pkt
+    pkt_info = "\n\t"+"TCP packet : " + "\n" +\
+                      "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
+                      "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
+                      "\t\t"+"dl_vlan_enable = "+ str(dl_vlan_enable) + "\n" + \
+                      "\t\t"+"vlan_vid = " + str(vlan_vid) + "\n" +  \
+                      "\t\t"+"vlan_pcp = " + str(vlan_pcp) + "\n" + \
+                      "\t\t"+"dl_vlan_cfi = " + str(dl_vlan_cfi) + "\n" + \
+                      "\t\t"+"ip_src = " + str(ip_src) + "\n" + \
+                      "\t\t"+"ip_dst = " + str(ip_dst) + "\n" + \
+                      "\t\t"+"ip_tos = " + str(ip_tos) + "\n" + \
+                      "\t\t"+"ip_ttl = " + str(ip_ttl) + "\n" + \
+                      "\t\t"+"tcp_sport = " + str(tcp_sport) + "\n" + \
+                      "\t\t"+"tcp_dport = " + str(tcp_dport) + "\n" + \
+                      "\t\t"+"ip_ihl = " + str(ip_ihl) + "\n" + \
+                      "\t\t"+"ip_options = " + str(ip_options) + "\n" 
+    L = []
+    L.append(pkt)
+    L.append(pkt_info)
+    return L
 
 def simple_tcpv6_packet(pktlen=100,
                         eth_dst='00:01:02:03:04:05',
@@ -166,7 +170,8 @@ def simple_tcpv6_packet(pktlen=100,
     @param eth_dst Destination MAC
     @param eth_src Source MAC
     @param dl_vlan_enable True if the packet is with vlan, False otherwise
-    @param vlan_vid VLAN ID
+    @param vlan_vid VLAN ID:140
+
     @param vlan_pcp VLAN priority
     @param ipv6_src IPv6 source
     @param ipv6_dst IPv6 destination
