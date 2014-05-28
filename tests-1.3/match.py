@@ -56,11 +56,11 @@ class MatchTest(base_tests.SimpleDataPlane):
                 buffer_id=ofp.OFP_NO_BUFFER,
                 priority=1000)
         self.controller.message_send(request)
-	#q = PrettyPrinter(maxwidth=200)
-	#request.pretty_print(q)
-	#print (q.__str__())
+        #q = PrettyPrinter(maxwidth=200)
+        #request.pretty_print(q)
+        #print (q.__str__())
 
-	time.sleep(5)
+        time.sleep(5)
 
         logging.info("(Inserting match-all flow sending packets to controller)")
         request = ofp.message.flow_add(
@@ -79,17 +79,17 @@ class MatchTest(base_tests.SimpleDataPlane):
 
         #for name, pkt in matching.items():
         for name, pkt_info in matching.items():
-	    len_pkt_info = len(pkt_info)
-	    if len_pkt_info == 1:
-	        pkt = pkt_info 
-	    elif len_pkt_info == 2:
-	        pkt = pkt_info[0]
-	        debug_str = pkt_info[1]
-	    logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
+        len_pkt_info = len(pkt_info)
+        if len_pkt_info == 1:
+            pkt = pkt_info 
+        elif len_pkt_info == 2:
+            pkt = pkt_info[0]
+            debug_str = pkt_info[1]
+            logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
             logging.info("Sending matching packet %s, expecting output to port %d", repr(name), out_port)
 
-	    if len_pkt_info == 2:
-	        logging.info(debug_str) 
+        if len_pkt_info == 2:
+            logging.info(debug_str) 
             pktstr = str(pkt)
             self.dataplane.send(in_port, pktstr)
             verify_packets(self, pktstr, [out_port])
