@@ -679,7 +679,7 @@ class Controller(Thread):
 	# the following lines are modified by jungwoo
 	q = PrettyPrinter(maxwidth=200)
 	msg.pretty_print(q)
-    self.logger.info("message type %d ", msg.type)
+        self.logger.info("message type %d ", msg.type)
 	self.logger.info("----- Test Step %d -----", oftest.testutils.test_step_count)
 	self.logger.info("%s\n", q.__str__())
 	oftest.testutils.test_step_count+=1

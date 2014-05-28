@@ -1,12 +1,14 @@
 ** START TEST CASE match.EthSrcMasked
 Create/listen at 150.225.14.201:6653
-150.225.14.201:6653: Incoming connection from ('150.225.14.207', 43102)
+150.225.14.201:6653: Incoming connection from ('150.225.14.207', 34593)
+message type 0 
 ----- Test Step 0 -----
-hello { xid = 0xb40166f4, elements = [ ] }
+hello { xid = 0x200347e5, elements = [ ] }
 
-Connected ('150.225.14.207', 43102)
+Connected ('150.225.14.207', 34593)
+message type 5 
 ----- Test Step 1 -----
-features_request { xid = 0x5530e32 }
+features_request { xid = 0xff21c55e }
 
 Running match test for match_v3 {
   oxm_list = [
@@ -14,9 +16,10 @@ Running match test for match_v3 {
   ]
 }
 Deleting all flows
+message type 14 
 ----- Test Step 2 -----
 flow_delete {
-  xid = 0x7d606b76,
+  xid = 0xa5f91924,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0xff,
@@ -31,13 +34,15 @@ flow_delete {
   instructions = [ ]
 }
 
+message type 20 
 ----- Test Step 3 -----
-barrier_request { xid = 0x72c4f7d1 }
+barrier_request { xid = 0x8945eb84 }
 
 Inserting flow sending matching packets to port 5
+message type 14 
 ----- Test Step 4 -----
 flow_add {
-  xid = 0x2ae42bf5,
+  xid = 0x170cadfe,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -52,13 +57,15 @@ flow_add {
   instructions = [ apply_actions { actions = [ output { port = 5, max_len = 0xffff } ] } ]
 }
 
+message type 3 
 ----- Test Step 5 -----
 echo_reply { xid = 0x0, data = '' }
 
 Inserting match-all flow sending packets to controller
+message type 14 
 ----- Test Step 6 -----
 flow_add {
-  xid = 0x77b0d0cf,
+  xid = 0x259fdfaa,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -73,8 +80,9 @@ flow_add {
   instructions = [ apply_actions { actions = [ output { port = OFPP_CONTROLLER, max_len = 0xffff } ] } ]
 }
 
+message type 20 
 ----- Test Step 7 -----
-barrier_request { xid = 0x589eb410 }
+barrier_request { xid = 0x75e49da7 }
 
 ----- Test Step 8 -----
 Sending matching packet 'ff:01:02:f3:04:05', expecting output to port 5
@@ -114,10 +122,10 @@ Sending matching packet '00:01:02:03:04:05', expecting output to port 5
 		ip_ihl = None
 		ip_options = False
 
+Ignoring listen soc shutdown error
 Exiting controller thread
 Ignoring switch soc shutdown error
 Ignoring listen soc shutdown error
-Ignoring listen soc shutdown error
 ** END TEST CASE match.EthSrcMasked
-*** TEST RUN END  : Tue May 27 17:18:56 2014
+*** TEST RUN END  : Wed May 28 09:46:15 2014
 Thread exit
