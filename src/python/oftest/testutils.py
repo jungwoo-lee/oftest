@@ -466,8 +466,20 @@ def simple_arp_packet(pktlen=60,
     pkt /= scapy.ARP(hwsrc=hw_snd, hwdst=hw_tgt, pdst=ip_tgt, psrc=ip_snd, op=arp_op)
 
     pkt = pkt/("\0" * (pktlen - len(pkt)))
-
-    return pkt
+    pkt_info = "\n\t"+"ARP packet : " + "\n" +\
+                      "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
+                      "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
+                      "\t\t"+"vlan_vid = " + str(vlan_vid) + "\n" +  \
+                      "\t\t"+"vlan_pcp = " + str(vlan_pcp) + "\n" + \
+                      "\t\t"+"arp_op = " + str(arp_op) + "\n" + \
+                      "\t\t"+"ip_snd = " + str(ip_snd) + "\n" + \
+                      "\t\t"+"ip_tgt = " + str(ip_tgt) + "\n" + \
+                      "\t\t"+"hw_snd = " + str(hw_snd) + "\n" + \
+                      "\t\t"+"hw_tgt = " + str(hw_tgt) + "\n" 
+    L = []
+    L.append(pkt)
+    L.append(pkt_info)
+    return L
 
 def simple_eth_packet(pktlen=60,
                       eth_dst='00:01:02:03:04:05',
