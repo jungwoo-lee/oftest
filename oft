@@ -85,9 +85,9 @@ config_default = {
     "relax"              : False,
     "test_params"        : "None",
     "fail_skipped"       : False,
-    "default_timeout"    : 9.0,
+    "default_timeout"    : 2.0,
     #"default_negative_timeout" : 0.01, #added by jungwoo
-    "default_negative_timeout" : 0.09,
+    "default_negative_timeout" : 0.01,
     "minsize"            : 0,
     "random_seed"        : None,
     "disable_ipv6"       : False,

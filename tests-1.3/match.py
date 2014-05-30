@@ -99,12 +99,29 @@ class MatchTest(base_tests.SimpleDataPlane):
             pktstr = str(pkt)
             self.dataplane.send(in_port, pktstr)
             verify_packets(self, pktstr, [out_port])
+	    oftest.testutils.test_step_count += 1
 
         for name, pkt in nonmatching.items():
+            len_pkt_info = len(pkt_info)
+	    print "\nname = "+name
+	    print pkt_info
+            if len_pkt_info == 1:
+                pkt = pkt_info 
+            elif len_pkt_info == 2:
+                pkt = pkt_info[0]
+                debug_str = pkt_info[1]
+	    else:
+	        print "wrong here!"
+		print len_pkt_info
+		print name
+            logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
             logging.info("Sending non-matching packet %s, expecting packet-in", repr(name))
+            if len_pkt_info == 2:
+                logging.info(debug_str) 
             pktstr = str(pkt)
             self.dataplane.send(in_port, pktstr)
             verify_packet_in(self, pktstr, in_port, ofp.OFPR_ACTION)
+	    oftest.testutils.test_step_count += 1
 
 # Does not use MatchTest because the ingress port is not a packet field
 class InPort(base_tests.SimpleDataPlane):
