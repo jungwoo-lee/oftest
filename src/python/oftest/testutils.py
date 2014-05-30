@@ -362,7 +362,24 @@ def simple_icmp_packet(pktlen=60,
 
     pkt = pkt/("0" * (pktlen - len(pkt)))
 
-    return pkt
+    pkt_info = "\n\t"+"ICMP packet : " + "\n" +\
+                      "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
+                      "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
+                      "\t\t"+"dl_vlan_enable = "+ str(dl_vlan_enable) + "\n" + \
+                      "\t\t"+"vlan_vid = " + str(vlan_vid) + "\n" +  \
+                      "\t\t"+"vlan_pcp = " + str(vlan_pcp) + "\n" + \
+                      "\t\t"+"ip_src = " + str(ip_src) + "\n" + \
+                      "\t\t"+"ip_dst = " + str(ip_dst) + "\n" + \
+                      "\t\t"+"ip_tos = " + str(ip_tos) + "\n" + \
+                      "\t\t"+"ip_ttl = " + str(ip_ttl) + "\n" + \
+                      "\t\t"+"ip_id = " + str(ip_id) + "\n" + \
+                      "\t\t"+"icmp_type = " + str(icmp_type) + "\n" + \
+                      "\t\t"+"icmp_code = " + str(icmp_code) + "\n" + \
+                      "\t\t"+"icmp_data = " + icmp_data + "\n" 
+    L = []
+    L.append(pkt)
+    L.append(pkt_info)
+    return L
 
 def simple_icmpv6_packet(pktlen=100,
                          eth_dst='00:01:02:03:04:05',
