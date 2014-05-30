@@ -1,0 +1,121 @@
+11:33:18.969  root      : INFO    : ** START TEST CASE match.IPv4ICMPCode
+11:33:18.969  controller: INFO    : Create/listen at 150.225.14.201:6653
+11:33:19.620  controller: INFO    : 150.225.14.201:6653: Incoming connection from ('150.225.14.207', 48825)
+11:33:19.620  controller: DEBUG   : Msg out: version 4 class hello len 8 xid 3924678581
+11:33:19.620  controller: DEBUG   : (message type = 0)
+11:33:19.621  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+11:33:19.621  controller: INFO    : hello { xid = 0xe9edd7b5, elements = [ ] }
+
+11:33:19.621  controller: DEBUG   : Msg in: version 4 class hello len 8 xid 14
+11:33:19.633  root      : INFO    : Connected ('150.225.14.207', 48825)
+11:33:19.634  controller: DEBUG   : Running transaction 42166278
+11:33:19.634  controller: DEBUG   : Msg out: version 4 class features_request len 8 xid 42166278
+11:33:19.634  controller: DEBUG   : (message type = 5)
+11:33:19.634  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+11:33:19.634  controller: INFO    : features_request { xid = 0x2836806 }
+
+11:33:19.634  controller: DEBUG   : Waiting for transaction 42166278
+11:33:19.634  controller: DEBUG   : Msg in: version 4 class features_reply len 32 xid 42166278
+11:33:19.635  controller: DEBUG   : Matched expected XID 42166278
+11:33:19.645  root      : INFO    : Running match test for match_v3 {
+  oxm_list = [
+    eth_type { value = 0x800 },
+    ip_proto { value = 0x1 },
+    icmpv4_code { value = 0x2 }
+  ]
+}
+11:33:19.646  root      : INFO    : (Deleting all flows)
+11:33:19.646  controller: DEBUG   : Msg out: version 4 class flow_delete len 56 xid 3055845762
+11:33:19.646  controller: DEBUG   : (message type = 14)
+11:33:19.646  controller: INFO    : ----- Test Step 1 -----
+11:33:19.646  controller: INFO    : flow_delete {
+  xid = 0xb6248182,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0xff,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x0,
+  buffer_id = 0xffffffff,
+  out_port = OFPP_ANY,
+  out_group = 0xffffffff,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ ]
+}
+
+11:33:19.646  controller: DEBUG   : Running transaction 3816967675
+11:33:19.647  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 3816967675
+11:33:19.647  controller: DEBUG   : (message type = 20)
+11:33:19.647  controller: INFO    : ----- Test Step 2 -----
+11:33:19.647  controller: INFO    : barrier_request { xid = 0xe3824dfb }
+
+11:33:19.647  controller: DEBUG   : Waiting for transaction 3816967675
+11:33:19.647  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 3816967675
+11:33:19.647  controller: DEBUG   : Matched expected XID 3816967675
+11:33:19.648  root      : INFO    : (Inserting flow sending matching packets to port 5)
+11:33:19.648  controller: DEBUG   : Msg out: version 4 class flow_add len 96 xid 292117239
+11:33:19.649  controller: DEBUG   : (message type = 14)
+11:33:19.649  controller: INFO    : ----- Test Step 3 -----
+11:33:19.649  controller: INFO    : flow_add {
+  xid = 0x11695af7,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0x0,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x3e8,
+  buffer_id = 0xffffffff,
+  out_port = 0,
+  out_group = 0x0,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ eth_type { value = 0x800 }, ip_proto { value = 0x1 }, icmpv4_code { value = 0x2 } ] },
+  instructions = [ apply_actions { actions = [ output { port = 5, max_len = 0xffff } ] } ]
+}
+
+11:33:24.619  controller: DEBUG   : Msg in: version 4 class echo_request len 8 xid 0
+11:33:24.619  controller: DEBUG   : Responding to echo request
+11:33:24.625  controller: DEBUG   : Msg out: version 4 class echo_reply len 8 xid 0
+11:33:24.625  controller: DEBUG   : (message type = 3)
+11:33:24.625  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+11:33:24.625  controller: INFO    : echo_reply { xid = 0x0, data = '' }
+
+11:33:24.653  root      : INFO    : (Inserting match-all flow sending packets to controller)
+11:33:24.653  controller: DEBUG   : Msg out: version 4 class flow_add len 80 xid 4018019162
+11:33:24.653  controller: DEBUG   : (message type = 14)
+11:33:24.653  controller: INFO    : ----- Test Step 4 -----
+11:33:24.654  controller: INFO    : flow_add {
+  xid = 0xef7e1b5a,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0x0,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x1,
+  buffer_id = 0xffffffff,
+  out_port = 0,
+  out_group = 0x0,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ apply_actions { actions = [ output { port = OFPP_CONTROLLER, max_len = 0xffff } ] } ]
+}
+
+11:33:24.654  controller: DEBUG   : Running transaction 3630213161
+11:33:24.654  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 3630213161
+11:33:24.654  controller: DEBUG   : (message type = 20)
+11:33:24.654  controller: INFO    : ----- Test Step 5 -----
+11:33:24.654  controller: INFO    : barrier_request { xid = 0xd860a829 }
+
+11:33:24.654  controller: DEBUG   : Waiting for transaction 3630213161
+11:33:24.656  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 3630213161
+11:33:24.656  controller: DEBUG   : Matched expected XID 3630213161
+11:33:24.660  root      : INFO    : ----- Test Step 6 -----
+11:33:24.660  root      : INFO    : Sending matching packet 'type=5 code=2', expecting output to port 5
+11:33:24.660  controller: INFO    : Ignoring listen soc shutdown error
+11:33:24.661  controller: ERROR   : Unknown socket ready: <socket._socketobject object at 0x1a75980>
+11:33:24.661  controller: INFO    : Exiting controller thread
+11:33:24.661  controller: INFO    : Ignoring switch soc shutdown error
+11:33:24.661  controller: INFO    : Ignoring listen soc shutdown error
+11:33:24.661  root      : INFO    : ** END TEST CASE match.IPv4ICMPCode
+11:33:24.662  root      : INFO    : *** TEST RUN END  : Fri May 30 11:33:24 2014
+11:33:24.662  dataplane : INFO    : Thread exit

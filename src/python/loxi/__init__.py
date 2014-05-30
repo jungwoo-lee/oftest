@@ -28,7 +28,12 @@ def protocol(ver):
     elif ver == 4:
         import of13
         return of13
+    elif ver == 5: # added by jungwoo. Currently oftest supports upto OF 1.3
+        print "\n" + "ver "+str(ver)+" received. OF Test supports upto OF 1.3, so sets to OF 1.3"
+        import of13
+	return of13
     else:
+        print "\n"+"unsupported of version ="+str(ver) #added by jungwoo
         raise ValueError
 
 class ProtocolError(Exception):

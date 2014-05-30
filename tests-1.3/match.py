@@ -80,11 +80,17 @@ class MatchTest(base_tests.SimpleDataPlane):
         #for name, pkt in matching.items():
         for name, pkt_info in matching.items():
             len_pkt_info = len(pkt_info)
+	    print "\nname = "+name
+	    print pkt_info
             if len_pkt_info == 1:
                 pkt = pkt_info 
             elif len_pkt_info == 2:
                 pkt = pkt_info[0]
                 debug_str = pkt_info[1]
+	    else:
+	        print "wrong here!"
+		print len_pkt_info
+		print name
             logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
             logging.info("Sending matching packet %s, expecting output to port %d", repr(name), out_port)
 
