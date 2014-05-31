@@ -101,7 +101,7 @@ class MatchTest(base_tests.SimpleDataPlane):
             verify_packets(self, pktstr, [out_port])
 	    oftest.testutils.test_step_count += 1
 
-        for name, pkt in nonmatching.items():
+        for name, pkt_info in nonmatching.items():
             len_pkt_info = len(pkt_info)
 	    print "\nname = "+name
 	    print pkt_info

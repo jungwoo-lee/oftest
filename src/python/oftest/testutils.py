@@ -259,8 +259,26 @@ def simple_udp_packet(pktlen=100,
                 scapy.UDP(sport=udp_sport, dport=udp_dport)
 
     pkt = pkt/("D" * (pktlen - len(pkt)))
-
-    return pkt
+    pkt_info = "\n\t"+"UDP packet : " + "\n" +\
+                      "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
+                      "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
+                      "\t\t"+"dl_vlan_enable = "+ str(dl_vlan_enable) + "\n" + \
+                      "\t\t"+"vlan_vid = " + str(vlan_vid) + "\n" +  \
+                      "\t\t"+"vlan_pcp = " + str(vlan_pcp) + "\n" + \
+                      "\t\t"+"dl_vlan_cfi = " + str(dl_vlan_cfi) + "\n" + \
+                      "\t\t"+"ip_src = " + str(ip_src) + "\n" + \
+                      "\t\t"+"ip_dst = " + str(ip_dst) + "\n" + \
+                      "\t\t"+"ip_tos = " + str(ip_tos) + "\n" + \
+                      "\t\t"+"ip_ttl = " + str(ip_ttl) + "\n" + \
+                      "\t\t"+"udp_sport = " + str(udp_sport) + "\n" + \
+                      "\t\t"+"udp_dport = " + str(udp_dport) + "\n" + \
+                      "\t\t"+"ip_ihl = " + str(ip_ihl) + "\n" + \
+                      "\t\t"+"ip_options = " + str(ip_options) + "\n" 
+    print pkt_info
+    L = []
+    L.append(pkt)
+    L.append(pkt_info)
+    return L
 
 def simple_udpv6_packet(pktlen=100,
                         eth_dst='00:01:02:03:04:05',

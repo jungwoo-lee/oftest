@@ -1,12 +1,12 @@
 ** START TEST CASE match.IPv4ICMPCode
 Create/listen at 150.225.14.201:6653
-150.225.14.201:6653: Incoming connection from ('150.225.14.207', 58840)
+150.225.14.201:6653: Incoming connection from ('150.225.14.207', 34286)
 ----- Message Sent By Controller (not a test step) -----
-hello { xid = 0x7cf0f81d, elements = [ ] }
+hello { xid = 0xd50d68f9, elements = [ ] }
 
-Connected ('150.225.14.207', 58840)
+Connected ('150.225.14.207', 34286)
 ----- Message Sent By Controller (not a test step) -----
-features_request { xid = 0x57f1a6ea }
+features_request { xid = 0x31fa0c30 }
 
 Running match test for match_v3 {
   oxm_list = [
@@ -18,7 +18,7 @@ Running match test for match_v3 {
 (Deleting all flows)
 ----- Test Step 1 -----
 flow_delete {
-  xid = 0x925039c7,
+  xid = 0xccf86ae3,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0xff,
@@ -34,12 +34,12 @@ flow_delete {
 }
 
 ----- Test Step 2 -----
-barrier_request { xid = 0xd3da26ff }
+barrier_request { xid = 0x437ad19e }
 
 (Inserting flow sending matching packets to port 5)
 ----- Test Step 3 -----
 flow_add {
-  xid = 0x74b1b3e2,
+  xid = 0x948ae1ab,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -60,7 +60,7 @@ echo_reply { xid = 0x0, data = '' }
 (Inserting match-all flow sending packets to controller)
 ----- Test Step 4 -----
 flow_add {
-  xid = 0x345a215a,
+  xid = 0x5e01a864,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -76,7 +76,7 @@ flow_add {
 }
 
 ----- Test Step 5 -----
-barrier_request { xid = 0xef0c4be5 }
+barrier_request { xid = 0xa1f9eb90 }
 
 ----- Test Step 6 -----
 Sending matching packet 'type=5 code=2', expecting output to port 5
@@ -128,14 +128,13 @@ Sending non-matching packet 'type=2 code=1', expecting packet-in
 		ip_tos = 0
 		ip_ttl = 64
 		ip_id = 1
-		icmp_type = 3
-		icmp_code = 2
+		icmp_type = 2
+		icmp_code = 1
 		icmp_data = 
 
-Ignoring listen soc shutdown error
 Exiting controller thread
-Ignoring switch soc shutdown error
+Ignoring listen soc shutdown error
 Ignoring listen soc shutdown error
 ** END TEST CASE match.IPv4ICMPCode
-*** TEST RUN END  : Fri May 30 15:56:08 2014
+*** TEST RUN END  : Fri May 30 17:34:26 2014
 Thread exit
