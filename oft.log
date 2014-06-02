@@ -1,35 +1,33 @@
-17:34:16.473  root      : INFO    : ** START TEST CASE match.IPv4ICMPCode
-17:34:16.473  controller: INFO    : Create/listen at 150.225.14.201:6653
-17:34:21.330  controller: INFO    : 150.225.14.201:6653: Incoming connection from ('150.225.14.207', 34286)
-17:34:21.331  controller: DEBUG   : Msg out: version 4 class hello len 8 xid 3574425849
-17:34:21.331  controller: DEBUG   : (message type = 0)
-17:34:21.331  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
-17:34:21.331  controller: INFO    : hello { xid = 0xd50d68f9, elements = [ ] }
+13:46:29.313  root      : INFO    : ** START TEST CASE match.EthSrcMasked
+13:46:29.313  controller: INFO    : Create/listen at 150.225.14.201:6653
+13:46:30.072  controller: INFO    : 150.225.14.201:6653: Incoming connection from ('150.225.14.207', 47392)
+13:46:30.072  controller: DEBUG   : Msg out: version 4 class hello len 8 xid 4206540624
+13:46:30.072  controller: DEBUG   : (message type = 0)
+13:46:30.072  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+13:46:30.072  controller: INFO    : hello { xid = 0xfabab750, elements = [ ] }
 
-17:34:21.331  controller: DEBUG   : Msg in: version 4 class hello len 8 xid 77
-17:34:21.342  root      : INFO    : Connected ('150.225.14.207', 34286)
-17:34:21.342  controller: DEBUG   : Running transaction 838470704
-17:34:21.342  controller: DEBUG   : Msg out: version 4 class features_request len 8 xid 838470704
-17:34:21.342  controller: DEBUG   : (message type = 5)
-17:34:21.342  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
-17:34:21.342  controller: INFO    : features_request { xid = 0x31fa0c30 }
+13:46:30.073  controller: DEBUG   : Msg in: version 4 class hello len 8 xid 417
+13:46:30.078  root      : INFO    : Connected ('150.225.14.207', 47392)
+13:46:30.078  controller: DEBUG   : Running transaction 1977051738
+13:46:30.078  controller: DEBUG   : Msg out: version 4 class features_request len 8 xid 1977051738
+13:46:30.078  controller: DEBUG   : (message type = 5)
+13:46:30.078  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+13:46:30.078  controller: INFO    : features_request { xid = 0x75d76a5a }
 
-17:34:21.342  controller: DEBUG   : Waiting for transaction 838470704
-17:34:21.343  controller: DEBUG   : Msg in: version 4 class features_reply len 32 xid 838470704
-17:34:21.343  controller: DEBUG   : Matched expected XID 838470704
-17:34:21.354  root      : INFO    : Running match test for match_v3 {
+13:46:30.078  controller: DEBUG   : Waiting for transaction 1977051738
+13:46:30.079  controller: DEBUG   : Msg in: version 4 class features_reply len 32 xid 1977051738
+13:46:30.080  controller: DEBUG   : Matched expected XID 1977051738
+13:46:30.091  root      : INFO    : Running match test for match_v3 {
   oxm_list = [
-    eth_type { value = 0x800 },
-    ip_proto { value = 0x1 },
-    icmpv4_code { value = 0x2 }
+    eth_src_masked { value = 00:01:02:03:04:05, value_mask = 00:ff:ff:0f:ff:ff }
   ]
 }
-17:34:21.354  root      : INFO    : (Deleting all flows)
-17:34:21.354  controller: DEBUG   : Msg out: version 4 class flow_delete len 56 xid 3438832355
-17:34:21.355  controller: DEBUG   : (message type = 14)
-17:34:21.355  controller: INFO    : ----- Test Step 1 -----
-17:34:21.355  controller: INFO    : flow_delete {
-  xid = 0xccf86ae3,
+13:46:30.091  root      : INFO    : (Deleting all flows)
+13:46:30.092  controller: DEBUG   : Msg out: version 4 class flow_delete len 56 xid 2068068320
+13:46:30.092  controller: DEBUG   : (message type = 14)
+13:46:30.092  controller: INFO    : ----- Test Step 1 -----
+13:46:30.092  controller: INFO    : flow_delete {
+  xid = 0x7b4437e0,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0xff,
@@ -44,21 +42,21 @@
   instructions = [ ]
 }
 
-17:34:21.355  controller: DEBUG   : Running transaction 1132122526
-17:34:21.355  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 1132122526
-17:34:21.355  controller: DEBUG   : (message type = 20)
-17:34:21.355  controller: INFO    : ----- Test Step 2 -----
-17:34:21.355  controller: INFO    : barrier_request { xid = 0x437ad19e }
+13:46:30.092  controller: DEBUG   : Running transaction 1597421546
+13:46:30.092  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 1597421546
+13:46:30.093  controller: DEBUG   : (message type = 20)
+13:46:30.093  controller: INFO    : ----- Test Step 2 -----
+13:46:30.093  controller: INFO    : barrier_request { xid = 0x5f36b7ea }
 
-17:34:21.355  controller: DEBUG   : Waiting for transaction 1132122526
-17:34:21.357  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 1132122526
-17:34:21.357  controller: DEBUG   : Matched expected XID 1132122526
-17:34:21.357  root      : INFO    : (Inserting flow sending matching packets to port 5)
-17:34:21.357  controller: DEBUG   : Msg out: version 4 class flow_add len 96 xid 2492129707
-17:34:21.358  controller: DEBUG   : (message type = 14)
-17:34:21.358  controller: INFO    : ----- Test Step 3 -----
-17:34:21.358  controller: INFO    : flow_add {
-  xid = 0x948ae1ab,
+13:46:30.093  controller: DEBUG   : Waiting for transaction 1597421546
+13:46:30.095  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 1597421546
+13:46:30.095  controller: DEBUG   : Matched expected XID 1597421546
+13:46:30.096  root      : INFO    : (Inserting flow sending matching packets to port 5)
+13:46:30.096  controller: DEBUG   : Msg out: version 4 class flow_add len 96 xid 108651554
+13:46:30.097  controller: DEBUG   : (message type = 14)
+13:46:30.097  controller: INFO    : ----- Test Step 3 -----
+13:46:30.097  controller: INFO    : flow_add {
+  xid = 0x679e422,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -69,23 +67,16 @@
   out_port = 0,
   out_group = 0x0,
   flags = 0x0,
-  match = match_v3 { oxm_list = [ eth_type { value = 0x800 }, ip_proto { value = 0x1 }, icmpv4_code { value = 0x2 } ] },
+  match = match_v3 { oxm_list = [ eth_src_masked { value = 00:01:02:03:04:05, value_mask = 00:ff:ff:0f:ff:ff } ] },
   instructions = [ apply_actions { actions = [ output { port = 5, max_len = 0xffff } ] } ]
 }
 
-17:34:26.330  controller: DEBUG   : Msg in: version 4 class echo_request len 8 xid 0
-17:34:26.330  controller: DEBUG   : Responding to echo request
-17:34:26.330  controller: DEBUG   : Msg out: version 4 class echo_reply len 8 xid 0
-17:34:26.330  controller: DEBUG   : (message type = 3)
-17:34:26.330  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
-17:34:26.331  controller: INFO    : echo_reply { xid = 0x0, data = '' }
-
-17:34:26.363  root      : INFO    : (Inserting match-all flow sending packets to controller)
-17:34:26.363  controller: DEBUG   : Msg out: version 4 class flow_add len 80 xid 1577166948
-17:34:26.364  controller: DEBUG   : (message type = 14)
-17:34:26.364  controller: INFO    : ----- Test Step 4 -----
-17:34:26.364  controller: INFO    : flow_add {
-  xid = 0x5e01a864,
+13:46:33.099  root      : INFO    : (Inserting match-all flow sending packets to controller)
+13:46:33.099  controller: DEBUG   : Msg out: version 4 class flow_add len 80 xid 2404487476
+13:46:33.099  controller: DEBUG   : (message type = 14)
+13:46:33.099  controller: INFO    : ----- Test Step 4 -----
+13:46:33.100  controller: INFO    : flow_add {
+  xid = 0x8f519134,
   cookie = 0x0,
   cookie_mask = 0x0,
   table_id = 0x0,
@@ -100,107 +91,86 @@
   instructions = [ apply_actions { actions = [ output { port = OFPP_CONTROLLER, max_len = 0xffff } ] } ]
 }
 
-17:34:26.364  controller: DEBUG   : Running transaction 2717510544
-17:34:26.365  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 2717510544
-17:34:26.365  controller: DEBUG   : (message type = 20)
-17:34:26.365  controller: INFO    : ----- Test Step 5 -----
-17:34:26.365  controller: INFO    : barrier_request { xid = 0xa1f9eb90 }
+13:46:33.100  controller: DEBUG   : Running transaction 2655063077
+13:46:33.100  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 2655063077
+13:46:33.100  controller: DEBUG   : (message type = 20)
+13:46:33.100  controller: INFO    : ----- Test Step 5 -----
+13:46:33.100  controller: INFO    : barrier_request { xid = 0x9e410c25 }
 
-17:34:26.365  controller: DEBUG   : Waiting for transaction 2717510544
-17:34:26.367  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 2717510544
-17:34:26.367  controller: DEBUG   : Matched expected XID 2717510544
-17:34:26.369  root      : INFO    : ----- Test Step 6 -----
-17:34:26.369  root      : INFO    : Sending matching packet 'type=5 code=2', expecting output to port 5
-17:34:26.369  root      : INFO    : 
-	ICMP packet : 
+13:46:33.100  controller: DEBUG   : Waiting for transaction 2655063077
+13:46:33.101  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 2655063077
+13:46:33.101  controller: DEBUG   : Matched expected XID 2655063077
+13:46:33.104  root      : INFO    : ----- Test Step 6 -----
+13:46:33.104  root      : INFO    : Sending matching packet 'ff:01:02:f3:04:05', expecting output to port 5
+13:46:33.104  root      : INFO    : 
+	TCP packet : 
 		eth_dst = 00:01:02:03:04:05
-		eth_src = 00:06:07:08:09:0a
+		eth_src = ff:01:02:f3:04:05
 		dl_vlan_enable = False
 		vlan_vid = 0
 		vlan_pcp = 0
+		dl_vlan_cfi = 0
 		ip_src = 192.168.0.1
 		ip_dst = 192.168.0.2
 		ip_tos = 0
 		ip_ttl = 64
-		ip_id = 1
-		icmp_type = 5
-		icmp_code = 2
-		icmp_data = 
+		tcp_sport = 1234
+		tcp_dport = 80
+		ip_ihl = None
+		ip_options = False
 
-17:34:26.370  dataplane : DEBUG   : Sending 60 bytes to port 4
-17:34:26.370  root      : DEBUG   : Checking for pkt on port 5
-17:34:26.370  dataplane : DEBUG   : Grabbing packet
-17:34:26.370  dataplane : DEBUG   : Out of packets on port 5
-17:34:26.370  dataplane : DEBUG   : Did not find packet
-17:34:26.371  dataplane : DEBUG   : Pkt len 60 in on port 5
-17:34:26.372  dataplane : DEBUG   : Grabbing packet
-17:34:26.372  dataplane : DEBUG   : Checking packet from port 5
-17:34:26.372  dataplane : DEBUG   : matched Packet length 60 
+13:46:33.105  dataplane : DEBUG   : Sending 100 bytes to port 4
+13:46:33.105  root      : DEBUG   : Checking for pkt on port 5
+13:46:33.105  dataplane : DEBUG   : Grabbing packet
+13:46:33.105  dataplane : DEBUG   : Out of packets on port 5
+13:46:33.106  dataplane : DEBUG   : Did not find packet
+13:46:33.106  dataplane : DEBUG   : Pkt len 100 in on port 5
+13:46:33.107  dataplane : DEBUG   : Grabbing packet
+13:46:33.107  dataplane : DEBUG   : Checking packet from port 5
+13:46:33.107  dataplane : DEBUG   : matched Packet length 100 
 
-0000  00 01 02 03 04 05 00 06 07 08 09 0a 08 00 45 00  ..............E.
-0010  00 2e 00 01 00 00 40 01 f9 7a c0 a8 00 01 c0 a8  ......@..z......
-0020  00 02 05 02 49 4c 00 00 00 00 30 30 30 30 30 30  ....IL....000000
-0030  30 30 30 30 30 30 30 30 30 30 30 30              000000000000
+0000  00 01 02 03 04 05 ff 01 02 f3 04 05 08 00 45 00  ..............E.
+0010  00 56 00 01 00 00 40 06 f9 4d c0 a8 00 01 c0 a8  .V....@..M......
+0020  00 02 04 d2 00 50 00 00 00 00 00 00 00 00 50 02  .....P........P.
+0030  20 00 e7 1c 00 00 44 44 44 44 44 44 44 44 44 44   .....DDDDDDDDDD
+0040  44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44  DDDDDDDDDDDDDDDD
+0050  44 44 44 44 44 44 44 44 44 44 44 44 44 44 44 44  DDDDDDDDDDDDDDDD
+0060  44 44 44 44                                      DDDD
 
-17:34:26.372  root      : INFO    : ----- Test Step 7 -----
-17:34:26.373  root      : INFO    : Sending matching packet 'type=3 code=2', expecting output to port 5
-17:34:26.373  root      : INFO    : 
-	ICMP packet : 
+13:46:34.108  root      : INFO    : ----- Test Step 7 -----
+13:46:34.109  root      : INFO    : Sending matching packet '00:01:02:03:04:05', expecting output to port 5
+13:46:34.109  root      : INFO    : 
+	TCP packet : 
 		eth_dst = 00:01:02:03:04:05
-		eth_src = 00:06:07:08:09:0a
+		eth_src = 00:01:02:03:04:05
 		dl_vlan_enable = False
 		vlan_vid = 0
 		vlan_pcp = 0
+		dl_vlan_cfi = 0
 		ip_src = 192.168.0.1
 		ip_dst = 192.168.0.2
 		ip_tos = 0
 		ip_ttl = 64
-		ip_id = 1
-		icmp_type = 3
-		icmp_code = 2
-		icmp_data = 
+		tcp_sport = 1234
+		tcp_dport = 80
+		ip_ihl = None
+		ip_options = False
 
-17:34:26.374  dataplane : DEBUG   : Sending 60 bytes to port 4
-17:34:26.374  root      : DEBUG   : Checking for pkt on port 5
-17:34:26.374  dataplane : DEBUG   : Grabbing packet
-17:34:26.374  dataplane : DEBUG   : Out of packets on port 5
-17:34:26.374  dataplane : DEBUG   : Did not find packet
-17:34:26.374  dataplane : DEBUG   : Pkt len 60 in on port 5
-17:34:26.375  dataplane : DEBUG   : Grabbing packet
-17:34:26.375  dataplane : DEBUG   : Checking packet from port 5
-17:34:26.376  dataplane : DEBUG   : matched Packet length 60 
-
-0000  00 01 02 03 04 05 00 06 07 08 09 0a 08 00 45 00  ..............E.
-0010  00 2e 00 01 00 00 40 01 f9 7a c0 a8 00 01 c0 a8  ......@..z......
-0020  00 02 03 02 4b 4c 00 00 00 00 30 30 30 30 30 30  ....KL....000000
-0030  30 30 30 30 30 30 30 30 30 30 30 30              000000000000
-
-17:34:26.376  root      : INFO    : ----- Test Step 8 -----
-17:34:26.376  root      : INFO    : Sending non-matching packet 'type=2 code=1', expecting packet-in
-17:34:26.376  root      : INFO    : 
-	ICMP packet : 
-		eth_dst = 00:01:02:03:04:05
-		eth_src = 00:06:07:08:09:0a
-		dl_vlan_enable = False
-		vlan_vid = 0
-		vlan_pcp = 0
-		ip_src = 192.168.0.1
-		ip_dst = 192.168.0.2
-		ip_tos = 0
-		ip_ttl = 64
-		ip_id = 1
-		icmp_type = 2
-		icmp_code = 1
-		icmp_data = 
-
-17:34:26.377  dataplane : DEBUG   : Sending 60 bytes to port 4
-17:34:26.377  controller: DEBUG   : Polling for packet_in
-17:34:26.378  controller: DEBUG   : packet_in message not in queue
-17:34:26.470  controller: DEBUG   : Msg in: version 4 class packet_in len 102 xid 0
-17:34:26.491  controller: DEBUG   : Got packet_in message
-17:34:26.491  controller: INFO    : Exiting controller thread
-17:34:26.491  controller: INFO    : Ignoring listen soc shutdown error
-17:34:26.491  controller: INFO    : Ignoring listen soc shutdown error
-17:34:26.492  root      : INFO    : ** END TEST CASE match.IPv4ICMPCode
-17:34:26.492  root      : INFO    : *** TEST RUN END  : Fri May 30 17:34:26 2014
-17:34:26.492  dataplane : INFO    : Thread exit
+13:46:34.110  dataplane : DEBUG   : Sending 100 bytes to port 4
+13:46:34.110  root      : DEBUG   : Checking for pkt on port 5
+13:46:34.110  dataplane : DEBUG   : Grabbing packet
+13:46:34.110  dataplane : DEBUG   : Out of packets on port 5
+13:46:34.110  dataplane : DEBUG   : Did not find packet
+13:46:35.124  dataplane : DEBUG   : Grabbing packet
+13:46:35.125  dataplane : DEBUG   : Out of packets on port 5
+13:46:35.125  dataplane : DEBUG   : Did not find packet
+13:46:36.110  dataplane : DEBUG   : Poll time out, no packet from 5
+13:46:36.110  root      : ERROR   : ** FAILED ASSERTION: Did not receive pkt on 5
+13:46:36.111  controller: INFO    : Ignoring listen soc shutdown error
+13:46:36.111  controller: ERROR   : Unknown socket ready: <socket._socketobject object at 0x2e63d70>
+13:46:36.111  controller: INFO    : Exiting controller thread
+13:46:36.111  controller: INFO    : Ignoring switch soc shutdown error
+13:46:36.111  controller: INFO    : Ignoring listen soc shutdown error
+13:46:36.112  root      : INFO    : ** END TEST CASE match.EthSrcMasked
+13:46:36.112  root      : INFO    : *** TEST RUN END  : Mon Jun  2 13:46:36 2014
+13:46:36.112  dataplane : INFO    : Thread exit

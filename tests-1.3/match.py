@@ -60,7 +60,7 @@ class MatchTest(base_tests.SimpleDataPlane):
         #request.pretty_print(q)
         #print (q.__str__())
 
-        time.sleep(5)
+        time.sleep(3)
 
         logging.info("(Inserting match-all flow sending packets to controller)")
         request = ofp.message.flow_add(
@@ -100,6 +100,7 @@ class MatchTest(base_tests.SimpleDataPlane):
             self.dataplane.send(in_port, pktstr)
             verify_packets(self, pktstr, [out_port])
 	    oftest.testutils.test_step_count += 1
+            time.sleep(1)
 
         for name, pkt_info in nonmatching.items():
             len_pkt_info = len(pkt_info)
@@ -342,7 +343,8 @@ class EthSrcMasked(MatchTest):
         ])
 
         matching = {
-            "00:01:02:03:04:05": simple_tcp_packet(eth_src='00:01:02:03:04:05'),
+            #"00:01:02:03:04:05": simple_tcp_packet(eth_src='00:01:02:03:04:05'),
+            "00:01:02:03:04:05": simple_tcp_packet(eth_src='00:01:02:03:04:05',eth_dst='00:01:02:03:04:01'),
             "ff:01:02:f3:04:05": simple_tcp_packet(eth_src='ff:01:02:f3:04:05'),
         }
 
