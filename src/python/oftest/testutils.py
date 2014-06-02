@@ -200,7 +200,23 @@ def simple_tcpv6_packet(pktlen=100,
     pkt /= scapy.TCP(sport=tcp_sport, dport=tcp_dport)
     pkt /= ("D" * (pktlen - len(pkt)))
 
-    return pkt
+    pkt_info = "\n\t"+"ICMP packet : " + "\n" +\
+                      "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
+                      "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
+                      "\t\t"+"dl_vlan_enable = "+ str(dl_vlan_enable) + "\n" + \
+                      "\t\t"+"vlan_vid = " + str(vlan_vid) + "\n" +  \
+                      "\t\t"+"vlan_pcp = " + str(vlan_pcp) + "\n" + \
+                      "\t\t"+"ipv6_src = " + str(ipv6_src) + "\n" + \
+                      "\t\t"+"ipv6_dst = " + str(ipv6_dst) + "\n" + \
+                      "\t\t"+"ipv6_tc = " + str(ipv6_tc) + "\n" + \
+                      "\t\t"+"ipv6_hlim = " + str(ipv6_hlim) + "\n" + \
+                      "\t\t"+"ipv6_fl = " + str(ipv6_fl) + "\n" + \
+                      "\t\t"+"tcp_sport = " + str(tcp_sport) + "\n" + \
+                      "\t\t"+"tcp_dport = " + str(tcp_dport) + "\n"
+    L = []
+    L.append(pkt)
+    L.append(pkt_info)
+    return L
 
 def simple_udp_packet(pktlen=100,
                       eth_dst='00:01:02:03:04:05',
@@ -325,7 +341,23 @@ def simple_udpv6_packet(pktlen=100,
     pkt /= scapy.UDP(sport=udp_sport, dport=udp_dport)
     pkt /= ("D" * (pktlen - len(pkt)))
 
-    return pkt
+    pkt_info = "\n\t"+"ICMP packet : " + "\n" +\
+                      "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
+                      "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
+                      "\t\t"+"dl_vlan_enable = "+ str(dl_vlan_enable) + "\n" + \
+                      "\t\t"+"vlan_vid = " + str(vlan_vid) + "\n" +  \
+                      "\t\t"+"vlan_pcp = " + str(vlan_pcp) + "\n" + \
+                      "\t\t"+"ipv6_src = " + str(ipv6_src) + "\n" + \
+                      "\t\t"+"ipv6_dst = " + str(ipv6_dst) + "\n" + \
+                      "\t\t"+"ipv6_tc = " + str(ipv6_tc) + "\n" + \
+                      "\t\t"+"ipv6_hlim = " + str(ipv6_hlim) + "\n" + \
+                      "\t\t"+"ipv6_fl = " + str(ipv6_fl) + "\n" + \
+                      "\t\t"+"udp_sport = " + str(udp_sport) + "\n" + \
+                      "\t\t"+"udp_dport = " + str(udp_dport) + "\n"
+    L = []
+    L.append(pkt)
+    L.append(pkt_info)
+    return L
 
 def simple_icmp_packet(pktlen=60, 
                       eth_dst='00:01:02:03:04:05',
