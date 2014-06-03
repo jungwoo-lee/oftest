@@ -476,7 +476,23 @@ def simple_icmpv6_packet(pktlen=100,
     pkt /= scapy.ICMPv6Unknown(type=icmp_type, code=icmp_code)
     pkt /= ("D" * (pktlen - len(pkt)))
 
-    return pkt
+    pkt_info = "\n\t"+"ICMPV6 packet : " + "\n" +\
+                      "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
+                      "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
+                      "\t\t"+"dl_vlan_enable = "+ str(dl_vlan_enable) + "\n" + \
+                      "\t\t"+"vlan_vid = " + str(vlan_vid) + "\n" +  \
+                      "\t\t"+"vlan_pcp = " + str(vlan_pcp) + "\n" + \
+                      "\t\t"+"ipv6_src = " + str(ipv6_src) + "\n" + \
+                      "\t\t"+"ipv6_dst = " + str(ipv6_dst) + "\n" + \
+                      "\t\t"+"ipv6_tc = " + str(ipv6_tc) + "\n" + \
+                      "\t\t"+"ipv6_hlim = " + str(ipv6_hlim) + "\n" + \
+                      "\t\t"+"ipv6_fl = " + str(ipv6_fl) + "\n" + \
+                      "\t\t"+"icmp_type = " + str(icmp_type) + "\n" + \
+                      "\t\t"+"icmp_code = " + str(icmp_code) + "\n" 
+    L = []
+    L.append(pkt)
+    L.append(pkt_info)
+    return L
 
 def simple_arp_packet(pktlen=60, 
                       eth_dst='ff:ff:ff:ff:ff:ff',
