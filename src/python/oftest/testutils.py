@@ -200,7 +200,7 @@ def simple_tcpv6_packet(pktlen=100,
     pkt /= scapy.TCP(sport=tcp_sport, dport=tcp_dport)
     pkt /= ("D" * (pktlen - len(pkt)))
 
-    pkt_info = "\n\t"+"ICMP packet : " + "\n" +\
+    pkt_info = "\n\t"+"TCP IPv6 Packet: " + "\n" +\
                       "\t\t"+"eth_dst = " + str(eth_dst) + "\n" +\
                       "\t\t"+"eth_src = " + str(eth_src) + "\n" +\
                       "\t\t"+"dl_vlan_enable = "+ str(dl_vlan_enable) + "\n" + \

@@ -56,9 +56,6 @@ class MatchTest(base_tests.SimpleDataPlane):
                 buffer_id=ofp.OFP_NO_BUFFER,
                 priority=1000)
         self.controller.message_send(request)
-        #q = PrettyPrinter(maxwidth=200)
-        #request.pretty_print(q)
-        #print (q.__str__())
 
         time.sleep(3)
 
@@ -100,7 +97,6 @@ class MatchTest(base_tests.SimpleDataPlane):
             self.dataplane.send(in_port, pktstr)
             verify_packets(self, pktstr, [out_port])
 	    oftest.testutils.test_step_count += 1
-            time.sleep(1)
 
         for name, pkt_info in nonmatching.items():
             len_pkt_info = len(pkt_info)
@@ -278,7 +274,8 @@ class EthSrc(MatchTest):
         ])
 
         matching = {
-            "correct": simple_tcp_packet(eth_src='00:01:02:03:04:05'),
+            #"correct": simple_tcp_packet(eth_src='00:01:02:03:04:05'),
+            "correct": simple_tcp_packet(eth_src='00:01:02:03:04:05',eth_dst='00:01:02:03:04:06'),
         }
 
         nonmatching = {
@@ -371,21 +368,46 @@ class EthTypeIPv4(MatchTest):
             scapy.IP(src='192.168.0.1', dst='192.168.0.2', proto=6)/ \
             scapy.TCP(sport=1234, dport=80)
 
+	pkt_info_snap_pkt = "\n\t"+"SNAP Packet : "+"\n"+ \
+             "\t\t"+"dst=00:01:02:03:04:05, src=00:06:07:08:09:0a, type=48" + "\n" +\
+             "\t\t"+"LLC(dsap=0xaa, ssap=0xaa, ctrl=0x03)" + "\n" +\
+             "\t\t"+"SNAP(OUI=0x000000, code=0x0800)" + "\n" +\
+             "\t\t"+"IP(src=192.168.0.1, dst=192.168.0.2, proto=6)" + "\n"+ \
+             "\t\t"+"TCP(sport=1234, dport=80)" + "\n"
+
+	snap_packet = []
+	snap_packet.append(snap_pkt)
+	snap_packet.append(pkt_info_snap_pkt)
+
+
         llc_pkt = \
             scapy.Ether(dst='00:01:02:03:04:05', src='00:06:07:08:09:0a', type=17)/ \
             scapy.LLC(dsap=0xaa, ssap=0xab, ctrl=0x03)
+
+	pkt_info_llc_pkt = "\n\t"+"SNAP Packet : "+"\n"+ \
+             "\t\t"+"dst=00:01:02:03:04:05, src=00:06:07:08:09:0a, type=48" + "\n" +\
+             "\t\t"+"LLC(dsap=0xaa, ssap=0xaa, ctrl=0x03)" + "\n" +\
+             "\t\t"+"SNAP(OUI=0x000000, code=0x0800)" + "\n" +\
+             "\t\t"+"IP(src=192.168.0.1, dst=192.168.0.2, proto=6)" + "\n"+ \
+             "\t\t"+"TCP(sport=1234, dport=80)" + "\n"+\
+             "\t\t"+"Ether(dst=00:01:02:03:04:05, src=00:06:07:08:09:0a, type=17)"+"\n"+ \
+             "\t\t"+"LLC(dsap=0xaa, ssap=0xab, ctrl=0x03)"+"\n"
+
+        llc_packet = []
+	llc_packet.append(llc_pkt)
+	llc_packet.append(pkt_info_llc_pkt)
 
         matching = {
             "ipv4/tcp": simple_tcp_packet(),
             "ipv4/udp": simple_udp_packet(),
             "ipv4/icmp": simple_icmp_packet(),
             "vlan tagged": simple_tcp_packet(dl_vlan_enable=True, vlan_vid=2, vlan_pcp=3),
-            "llc/snap": snap_pkt,
+            "llc/snap": snap_packet,
         }
 
         nonmatching = {
             "arp": simple_arp_packet(),
-            "llc": llc_pkt,
+            "llc": llc_packet,
             "ipv6/tcp": simple_tcpv6_packet(),
         }
 
@@ -441,7 +463,8 @@ class EthTypeNone(MatchTest):
     """
     def runTest(self):
         match = ofp.match([
-            ofp.oxm.eth_type(0x05ff)
+            #ofp.oxm.eth_type(0x05ff)
+            ofp.oxm.eth_type(0x0500)
         ])
 
         snap_pkt = \
@@ -451,18 +474,42 @@ class EthTypeNone(MatchTest):
             scapy.IP(src='192.168.0.1', dst='192.168.0.2', proto=6)/ \
             scapy.TCP(sport=1234, dport=80)
 
+	pkt_info_snap_pkt = "\n\t"+"SNAP Packet : "+"\n"+ \
+             "\t\t"+"dst=00:01:02:03:04:05, src=00:06:07:08:09:0a, type=48" + "\n" +\
+             "\t\t"+"LLC(dsap=0xaa, ssap=0xaa, ctrl=0x03)" + "\n" +\
+             "\t\t"+"SNAP(OUI=0x000000, code=0x0800)" + "\n" +\
+             "\t\t"+"IP(src=192.168.0.1, dst=192.168.0.2, proto=6)" + "\n"+ \
+             "\t\t"+"TCP(sport=1234, dport=80)" + "\n"
+
+	snap_packet = []
+	snap_packet.append(snap_pkt)
+	snap_packet.append(pkt_info_snap_pkt)
+
         llc_pkt = \
             scapy.Ether(dst='00:01:02:03:04:05', src='00:06:07:08:09:0a', type=17)/ \
             scapy.LLC(dsap=0xaa, ssap=0xab, ctrl=0x03)
 
+	pkt_info_llc_pkt = "\n\t"+"SNAP Packet : "+"\n"+ \
+             "\t\t"+"dst=00:01:02:03:04:05, src=00:06:07:08:09:0a, type=48" + "\n" +\
+             "\t\t"+"LLC(dsap=0xaa, ssap=0xaa, ctrl=0x03)" + "\n" +\
+             "\t\t"+"SNAP(OUI=0x000000, code=0x0800)" + "\n" +\
+             "\t\t"+"IP(src=192.168.0.1, dst=192.168.0.2, proto=6)" + "\n"+ \
+             "\t\t"+"TCP(sport=1234, dport=80)" + "\n"+\
+             "\t\t"+"Ether(dst=00:01:02:03:04:05, src=00:06:07:08:09:0a, type=17)"+"\n"+ \
+             "\t\t"+"LLC(dsap=0xaa, ssap=0xab, ctrl=0x03)"+"\n"
+
+        llc_packet = []
+	llc_packet.append(llc_pkt)
+	llc_packet.append(pkt_info_llc_pkt)
+
         matching = {
-            "llc": llc_pkt,
+            "llc": llc_packet,
         }
 
         nonmatching = {
             "ipv4/tcp": simple_tcp_packet(),
-            "ipv6/tcp": simple_tcpv6_packet(),
-            "llc/snap": snap_pkt,
+            #"ipv6/tcp": simple_tcpv6_packet(),
+            #"llc/snap": snap_packet,
         }
 
         self.verify_match(match, matching, nonmatching)
