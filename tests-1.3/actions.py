@@ -398,8 +398,12 @@ class SetIpv4TTL(BaseModifyPacketTest):
     """
     def runTest(self):
         actions = [ofp.action.set_nw_ttl(10)]
-        pkt = simple_tcp_packet()
-        exp_pkt = simple_tcp_packet(ip_ttl=10)
+        pkt_info = simple_tcp_packet()
+        pkt = pkt_info[0]
+	print pkt_info[1]
+        exp_pkt_info = simple_tcp_packet(ip_ttl=10)
+	exp_pkt = exp_pkt_info[0]
+	print exp_pkt_info[1]
         self.verify_modify(actions, pkt, exp_pkt)
 
 class SetIpv6HopLimit(BaseModifyPacketTest):

@@ -10,12 +10,23 @@ Test cases in other modules depend on this functionality.
 """
 
 import logging
+import oftest
 from oftest import config
 import oftest.base_tests as base_tests
 import ofp
 import time
 
 from oftest.testutils import *
+
+    
+def _dataplane_send(self, of_port, pkt_info):
+    logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
+    logging.info("Sending a packet to port %d", of_port)
+    pkt = pkt_info[0]
+    debug_str = pkt_info[1]
+    logging.info(debug_str)
+    oftest.testutils.test_step_count += 1
+    self.dataplane.send(of_port, str(pkt))
 
 @group('smoke')
 class Echo(base_tests.SimpleProtocol):
@@ -238,8 +249,8 @@ class PacketInMiss(base_tests.SimpleDataPlane):
     def runTest(self):
         delete_all_flows(self.controller)
 
-        parsed_pkt = simple_tcp_packet()
-        pkt = str(parsed_pkt)
+        pkt_info = simple_tcp_packet()
+        pkt = str(pkt_info[0])
 
         request = ofp.message.flow_add(
             table_id=test_param_get("table", 0),
@@ -253,13 +264,14 @@ class PacketInMiss(base_tests.SimpleDataPlane):
             buffer_id=ofp.OFP_NO_BUFFER,
             priority=0)
 
-        #logging.info("Inserting table-miss flow sending all packets to controller")
-        #self.controller.message_send(request)
-        #do_barrier(self.controller)
+        logging.info("Inserting table-miss flow sending all packets to controller")
+        self.controller.message_send(request)
+        do_barrier(self.controller)
 
         for of_port in config["port_map"].keys():
             logging.info("PacketInMiss test, port %d", of_port)
-            self.dataplane.send(of_port, pkt)
+	    _dataplane_send(self, of_port, pkt_info)
+            #self.dataplane.send(of_port, pkt)
             verify_packet_in(self, pkt, of_port, ofp.OFPR_NO_MATCH)
             verify_packets(self, pkt, [])
 

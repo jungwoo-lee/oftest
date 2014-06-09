@@ -1,40 +1,21 @@
-** START TEST CASE actions.SetIpv4TTL
+** START TEST CASE basic.QueueStats
 Create/listen at 150.225.14.201:6653
-150.225.14.201:6653: Incoming connection from ('150.225.14.207', 41294)
+150.225.14.201:6653: Incoming connection from ('150.225.14.208', 55955)
 ----- Message Sent By Controller (not a test step) -----
-hello { xid = 0xb9ea42df, elements = [ ] }
+hello { xid = 0x91cf734e, elements = [ ] }
 
-Connected ('150.225.14.207', 41294)
+Connected ('150.225.14.208', 55955)
 ----- Message Sent By Controller (not a test step) -----
-features_request { xid = 0xa13f4cd3 }
+features_request { xid = 0x7e111eaa }
 
-Running actions test for [ set_nw_ttl { nw_ttl = 0xa }, output { port = 5, max_len = 0x0 } ]
-(Deleting all flows)
+Sending queue stats request
 ----- Test Step 1 -----
-flow_delete {
-  xid = 0x8c8a3ec2,
-  cookie = 0x0,
-  cookie_mask = 0x0,
-  table_id = 0xff,
-  idle_timeout = 0x0,
-  hard_timeout = 0x0,
-  priority = 0x0,
-  buffer_id = 0xffffffff,
-  out_port = OFPP_ANY,
-  out_group = 0xffffffff,
-  flags = 0x0,
-  match = match_v3 { oxm_list = [ ] },
-  instructions = [ ]
-}
+queue_stats_request { xid = 0xe777ce55, flags = 0x0, port_no = OFPP_ANY, queue_id = 0xffffffff }
 
------ Test Step 2 -----
-barrier_request { xid = 0x841b9ef6 }
-
-Inserting flow
 Ignoring listen soc shutdown error
 Exiting controller thread
 Ignoring switch soc shutdown error
 Ignoring listen soc shutdown error
-** END TEST CASE actions.SetIpv4TTL
-*** TEST RUN END  : Tue Jun  3 22:14:29 2014
+** END TEST CASE basic.QueueStats
+*** TEST RUN END  : Sun Jun  8 23:07:33 2014
 Thread exit

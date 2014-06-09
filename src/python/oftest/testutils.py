@@ -1685,6 +1685,9 @@ def verify_packet_in(test, data, in_port, reason, controller=None):
     @param controller Controller instance, defaults to test.controller
     @returns The received packet-in message
     """
+    logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
+    logging.info("Verify the packet-in from port %d\n", in_port)
+    oftest.testutils.test_step_count += 1
 
     if controller == None:
         controller = test.controller
@@ -1754,6 +1757,11 @@ def verify_packet(test, pkt, ofport):
     Check that an expected packet is received
     """
     logging.debug("Checking for pkt on port %r", ofport)
+
+    logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
+    logging.info("Verify the packet in port %d\n", ofport)
+    oftest.testutils.test_step_count += 1
+
     (rcv_port, rcv_pkt, pkt_time) = test.dataplane.poll(port_number=ofport, exp_pkt=str(pkt))
     test.assertTrue(rcv_pkt != None, "Did not receive pkt on %r" % ofport)
 

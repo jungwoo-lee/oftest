@@ -1,58 +1,37 @@
-22:14:28.717  root      : INFO    : ** START TEST CASE actions.SetIpv4TTL
-22:14:28.717  controller: INFO    : Create/listen at 150.225.14.201:6653
-22:14:29.589  controller: INFO    : 150.225.14.201:6653: Incoming connection from ('150.225.14.207', 41294)
-22:14:29.589  controller: DEBUG   : Msg out: version 4 class hello len 8 xid 3119137503
-22:14:29.589  controller: DEBUG   : (message type = 0)
-22:14:29.589  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
-22:14:29.589  controller: INFO    : hello { xid = 0xb9ea42df, elements = [ ] }
+23:07:30.681  root      : INFO    : ** START TEST CASE basic.QueueStats
+23:07:30.681  controller: INFO    : Create/listen at 150.225.14.201:6653
+23:07:33.626  controller: INFO    : 150.225.14.201:6653: Incoming connection from ('150.225.14.208', 55955)
+23:07:33.626  controller: DEBUG   : Msg out: version 4 class hello len 8 xid 2446291790
+23:07:33.626  controller: DEBUG   : (message type = 0)
+23:07:33.626  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+23:07:33.626  controller: INFO    : hello { xid = 0x91cf734e, elements = [ ] }
 
-22:14:29.589  controller: DEBUG   : Msg in: version 4 class hello len 8 xid 915
-22:14:29.631  root      : INFO    : Connected ('150.225.14.207', 41294)
-22:14:29.631  controller: DEBUG   : Running transaction 2705280211
-22:14:29.631  controller: DEBUG   : Msg out: version 4 class features_request len 8 xid 2705280211
-22:14:29.631  controller: DEBUG   : (message type = 5)
-22:14:29.632  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
-22:14:29.632  controller: INFO    : features_request { xid = 0xa13f4cd3 }
+23:07:33.627  controller: DEBUG   : Msg in: version 4 class hello len 8 xid 77
+23:07:33.648  root      : INFO    : Connected ('150.225.14.208', 55955)
+23:07:33.648  controller: DEBUG   : Running transaction 2115051178
+23:07:33.648  controller: DEBUG   : Msg out: version 4 class features_request len 8 xid 2115051178
+23:07:33.648  controller: DEBUG   : (message type = 5)
+23:07:33.648  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+23:07:33.648  controller: INFO    : features_request { xid = 0x7e111eaa }
 
-22:14:29.632  controller: DEBUG   : Waiting for transaction 2705280211
-22:14:29.632  controller: DEBUG   : Msg in: version 4 class features_reply len 32 xid 2705280211
-22:14:29.632  controller: DEBUG   : Matched expected XID 2705280211
-22:14:29.638  root      : INFO    : Running actions test for [ set_nw_ttl { nw_ttl = 0xa }, output { port = 5, max_len = 0x0 } ]
-22:14:29.638  root      : INFO    : (Deleting all flows)
-22:14:29.638  controller: DEBUG   : Msg out: version 4 class flow_delete len 56 xid 2357870274
-22:14:29.639  controller: DEBUG   : (message type = 14)
-22:14:29.639  controller: INFO    : ----- Test Step 1 -----
-22:14:29.639  controller: INFO    : flow_delete {
-  xid = 0x8c8a3ec2,
-  cookie = 0x0,
-  cookie_mask = 0x0,
-  table_id = 0xff,
-  idle_timeout = 0x0,
-  hard_timeout = 0x0,
-  priority = 0x0,
-  buffer_id = 0xffffffff,
-  out_port = OFPP_ANY,
-  out_group = 0xffffffff,
-  flags = 0x0,
-  match = match_v3 { oxm_list = [ ] },
-  instructions = [ ]
-}
+23:07:33.648  controller: DEBUG   : Waiting for transaction 2115051178
+23:07:33.649  controller: DEBUG   : Msg in: version 4 class features_reply len 32 xid 2115051178
+23:07:33.649  controller: DEBUG   : Matched expected XID 2115051178
+23:07:33.650  root      : INFO    : Sending queue stats request
+23:07:33.650  controller: DEBUG   : Running transaction 3883388501
+23:07:33.650  controller: DEBUG   : Msg out: version 4 class queue_stats_request len 24 xid 3883388501
+23:07:33.650  controller: DEBUG   : (message type = 18)
+23:07:33.650  controller: INFO    : ----- Test Step 1 -----
+23:07:33.650  controller: INFO    : queue_stats_request { xid = 0xe777ce55, flags = 0x0, port_no = OFPP_ANY, queue_id = 0xffffffff }
 
-22:14:29.639  controller: DEBUG   : Running transaction 2216402678
-22:14:29.639  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 2216402678
-22:14:29.639  controller: DEBUG   : (message type = 20)
-22:14:29.639  controller: INFO    : ----- Test Step 2 -----
-22:14:29.639  controller: INFO    : barrier_request { xid = 0x841b9ef6 }
-
-22:14:29.640  controller: DEBUG   : Waiting for transaction 2216402678
-22:14:29.641  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 2216402678
-22:14:29.641  controller: DEBUG   : Matched expected XID 2216402678
-22:14:29.643  root      : INFO    : Inserting flow
-22:14:29.643  controller: INFO    : Ignoring listen soc shutdown error
-22:14:29.643  controller: ERROR   : Unknown socket ready: <socket._socketobject object at 0x1630830>
-22:14:29.644  controller: INFO    : Exiting controller thread
-22:14:29.644  controller: INFO    : Ignoring switch soc shutdown error
-22:14:29.644  controller: INFO    : Ignoring listen soc shutdown error
-22:14:29.644  root      : INFO    : ** END TEST CASE actions.SetIpv4TTL
-22:14:29.645  root      : INFO    : *** TEST RUN END  : Tue Jun  3 22:14:29 2014
-22:14:29.645  dataplane : INFO    : Thread exit
+23:07:33.650  controller: DEBUG   : Waiting for transaction 3883388501
+23:07:33.652  controller: DEBUG   : Msg in: version 4 class queue_op_failed_error_msg len 36 xid 3883388501
+23:07:33.652  controller: DEBUG   : Matched expected XID 3883388501
+23:07:33.654  controller: INFO    : Ignoring listen soc shutdown error
+23:07:33.654  controller: ERROR   : Unknown socket ready: <socket._socketobject object at 0x1a676e0>
+23:07:33.654  controller: INFO    : Exiting controller thread
+23:07:33.654  controller: INFO    : Ignoring switch soc shutdown error
+23:07:33.654  controller: INFO    : Ignoring listen soc shutdown error
+23:07:33.655  root      : INFO    : ** END TEST CASE basic.QueueStats
+23:07:33.655  root      : INFO    : *** TEST RUN END  : Sun Jun  8 23:07:33 2014
+23:07:33.655  dataplane : INFO    : Thread exit
