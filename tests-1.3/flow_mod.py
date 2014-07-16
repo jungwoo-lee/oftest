@@ -20,7 +20,7 @@ class Overwrite(base_tests.SimpleDataPlane):
     Verify that overwriting a flow changes most fields but preserves stats
     """
     def runTest(self):
-        in_port, out_port1, out_port2 = openflow_ports(3)
+        in_port, out_port1 = openflow_ports(2)
 
         delete_all_flows(self.controller)
 
@@ -35,7 +35,8 @@ class Overwrite(base_tests.SimpleDataPlane):
                 table_id=table_id,
                 match=match,
                 instructions=[
-                    ofp.instruction.apply_actions([ofp.action.output(out_port1)]),
+                    ofp.instruction.apply_actions([ofp.action.output(ofp.OFPP_CONTROLLER)]),
+                    #ofp.instruction.apply_actions([ofp.action.output(out_port1)]),
                 ],
                 buffer_id=ofp.OFP_NO_BUFFER,
                 priority=priority,
@@ -57,7 +58,7 @@ class Overwrite(base_tests.SimpleDataPlane):
                 table_id=table_id,
                 match=match,
                 instructions=[
-                    ofp.instruction.apply_actions([ofp.action.output(out_port2)]),
+                    ofp.instruction.apply_actions([ofp.action.output(out_port1)]),
                 ],
                 buffer_id=ofp.OFP_NO_BUFFER,
                 priority=priority,

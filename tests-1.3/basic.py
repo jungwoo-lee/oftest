@@ -82,8 +82,10 @@ class DefaultDrop(base_tests.SimpleDataPlane):
 	print in_port
         delete_all_flows(self.controller)
 
+        pkt_info = simple_tcp_packet()
         pkt = str(simple_tcp_packet())
-        self.dataplane.send(in_port, pkt)
+        _dataplane_send(self, in_port, pkt_info)
+        #self.dataplane.send(in_port, pkt)
         verify_no_packet_in(self, pkt, None)
         verify_packets(self, pkt, [])
 
@@ -100,9 +102,9 @@ class OutputExact(base_tests.SimpleDataPlane):
 
         delete_all_flows(self.controller)
 
-        parsed_pkt = simple_tcp_packet()
-        pkt = str(parsed_pkt)
-        match = packet_to_flow_match(self, parsed_pkt)
+        pkt_info = simple_tcp_packet()
+        pkt = str(pkt_info[0])
+        match = packet_to_flow_match(self, pkt_info[0])
 
         for out_port in ports:
             request = ofp.message.flow_add(
@@ -126,7 +128,8 @@ class OutputExact(base_tests.SimpleDataPlane):
                 if in_port == out_port:
                     continue
                 logging.info("OutputExact test, ports %d to %d", in_port, out_port)
-                self.dataplane.send(in_port, pkt)
+	        _dataplane_send(self, in_port, pkt_info)
+                #self.dataplane.send(in_port, pkt)
                 verify_packets(self, pkt, [out_port])
 
 class OutputWildcard(base_tests.SimpleDataPlane):
@@ -142,7 +145,8 @@ class OutputWildcard(base_tests.SimpleDataPlane):
 
         delete_all_flows(self.controller)
 
-        pkt = str(simple_tcp_packet())
+        pkt_info = simple_tcp_packet()
+        pkt = str(pkt_info[0])
 
         for out_port in ports:
             request = ofp.message.flow_add(
@@ -165,7 +169,8 @@ class OutputWildcard(base_tests.SimpleDataPlane):
                 if in_port == out_port:
                     continue
                 logging.info("OutputWildcard test, ports %d to %d", in_port, out_port)
-                self.dataplane.send(in_port, pkt)
+                _dataplane_send(self, in_port, pkt_info)
+                #self.dataplane.send(in_port, pkt)
                 verify_packets(self, pkt, [out_port])
 
 class PacketInExact(base_tests.SimpleDataPlane):
@@ -178,9 +183,9 @@ class PacketInExact(base_tests.SimpleDataPlane):
     def runTest(self):
         delete_all_flows(self.controller)
 
-        parsed_pkt = simple_tcp_packet()
-        pkt = str(parsed_pkt)
-        match = packet_to_flow_match(self, parsed_pkt)
+        pkt_info = simple_tcp_packet()
+        pkt = str(pkt_info[0])
+        match = packet_to_flow_match(self, pkt_info[0])
 
         request = ofp.message.flow_add(
             table_id=test_param_get("table", 0),
@@ -201,7 +206,8 @@ class PacketInExact(base_tests.SimpleDataPlane):
 
         for of_port in config["port_map"].keys():
             logging.info("PacketInExact test, port %d", of_port)
-            self.dataplane.send(of_port, pkt)
+	    _dataplane_send(self, of_port, pkt_info)
+            #self.dataplane.send(of_port, pkt)
             verify_packet_in(self, pkt, of_port, ofp.OFPR_ACTION)
             verify_packets(self, pkt, [])
 
@@ -215,7 +221,8 @@ class PacketInWildcard(base_tests.SimpleDataPlane):
     def runTest(self):
         delete_all_flows(self.controller)
 
-        pkt = str(simple_tcp_packet())
+        pkt_info = simple_tcp_packet()
+        pkt = str(pkt_info[0])
 
         request = ofp.message.flow_add(
             table_id=test_param_get("table", 0),
@@ -235,7 +242,8 @@ class PacketInWildcard(base_tests.SimpleDataPlane):
 
         for of_port in config["port_map"].keys():
             logging.info("PacketInWildcard test, port %d", of_port)
-            self.dataplane.send(of_port, pkt)
+            #self.dataplane.send(of_port, pkt)
+	    _dataplane_send(self, of_port, pkt_info)
             verify_packet_in(self, pkt, of_port, ofp.OFPR_ACTION)
             verify_packets(self, pkt, [])
 

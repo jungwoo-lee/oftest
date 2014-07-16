@@ -1716,6 +1716,9 @@ def verify_no_packet_in(test, data, in_port, controller=None):
     @param in_port OpenFlow port number to expect as the packet_in in_port
     @param controller Controller instance, defaults to test.controller
     """
+    logging.info("----- Test Step %d -----", oftest.testutils.test_step_count)
+    logging.info("Verify no packet-in port\n")
+    oftest.testutils.test_step_count += 1
 
     if controller == None:
         controller = test.controller

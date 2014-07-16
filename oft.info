@@ -1,21 +1,40 @@
-** START TEST CASE basic.QueueStats
+** START TEST CASE actions.Output
 Create/listen at 150.225.14.201:6653
-150.225.14.201:6653: Incoming connection from ('150.225.14.208', 55955)
+150.225.14.201:6653: Incoming connection from ('150.225.14.208', 37051)
 ----- Message Sent By Controller (not a test step) -----
-hello { xid = 0x91cf734e, elements = [ ] }
+hello { xid = 0xad902023, elements = [ ] }
 
-Connected ('150.225.14.208', 55955)
+Connected ('150.225.14.208', 37051)
 ----- Message Sent By Controller (not a test step) -----
-features_request { xid = 0x7e111eaa }
+features_request { xid = 0x4a609305 }
 
-Sending queue stats request
+Running actions test for [ output { port = OFPP_CONTROLLER, max_len = 0x0 } ]
+(Deleting all flows)
 ----- Test Step 1 -----
-queue_stats_request { xid = 0xe777ce55, flags = 0x0, port_no = OFPP_ANY, queue_id = 0xffffffff }
+flow_delete {
+  xid = 0x247dae66,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0xff,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x0,
+  buffer_id = 0xffffffff,
+  out_port = OFPP_ANY,
+  out_group = 0xffffffff,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ ]
+}
 
+----- Test Step 2 -----
+barrier_request { xid = 0xa3a84ed9 }
+
+Inserting flow
 Ignoring listen soc shutdown error
 Exiting controller thread
 Ignoring switch soc shutdown error
 Ignoring listen soc shutdown error
-** END TEST CASE basic.QueueStats
-*** TEST RUN END  : Sun Jun  8 23:07:33 2014
+** END TEST CASE actions.Output
+*** TEST RUN END  : Wed Jul 16 13:51:31 2014
 Thread exit

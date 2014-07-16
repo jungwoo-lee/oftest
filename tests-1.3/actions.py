@@ -24,9 +24,11 @@ class Output(base_tests.SimpleDataPlane):
     Output to a single port
     """
     def runTest(self):
-        in_port, out_port = openflow_ports(2)
+        in_port = openflow_ports(1)
+        #in_port, out_port = openflow_ports(2)
 
-        actions = [ofp.action.output(out_port)]
+        actions = [ofp.action.output(ofp.OFPP_CONTROLLER)]
+        #actions = [ofp.action.output(out_port)]
 
         pkt = simple_tcp_packet()
 
@@ -48,9 +50,11 @@ class Output(base_tests.SimpleDataPlane):
 
         pktstr = str(pkt)
 
-        logging.info("Sending packet, expecting output to port %d", out_port)
+        #logging.info("Sending packet, expecting output to port %d", out_port)
+        logging.info("Sending packet, expecting output to port %d", ofp.OFPP_CONTROLLER)
         self.dataplane.send(in_port, pktstr)
         verify_packets(self, pktstr, [out_port])
+        #verify_packets(self, pktstr, [out_port])
 
 class OutputMultiple(base_tests.SimpleDataPlane):
     """
@@ -194,7 +198,7 @@ class SetVlanPcp(BaseModifyPacketTest):
 
 class SetEthDst(BaseModifyPacketTest):
     """
-    Set Eth Dst address 
+    Set Eth Dst address
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.eth_dst([0x00,0xA1,0xCD,0x53,0xC6,0x55]))]
@@ -204,7 +208,7 @@ class SetEthDst(BaseModifyPacketTest):
 
 class SetEthSrc(BaseModifyPacketTest):
     """
-    Set Eth Src address 
+    Set Eth Src address
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.eth_src([0x00,0xA1,0xCD,0x53,0xC6,0x55]))]
@@ -214,7 +218,7 @@ class SetEthSrc(BaseModifyPacketTest):
 
 class SetIpv4Dscp(BaseModifyPacketTest):
     """
-    Set IPv4 DSCP 
+    Set IPv4 DSCP
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ip_dscp(0x01))]
@@ -234,7 +238,7 @@ class SetIpv4ECN(BaseModifyPacketTest):
 
 class SetIpv4DSCP_NonZeroECN(BaseModifyPacketTest):
     """
-    Set IPv4 DSCP and make sure ECN is not modified 
+    Set IPv4 DSCP and make sure ECN is not modified
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ip_dscp(0x01))]
@@ -274,7 +278,7 @@ class SetIPv4Dst(BaseModifyPacketTest):
 
 class SetTCPSrc(BaseModifyPacketTest):
     """
-    Set TCP source port 
+    Set TCP source port
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.tcp_src(800))]
@@ -284,7 +288,7 @@ class SetTCPSrc(BaseModifyPacketTest):
 
 class SetTCPDst(BaseModifyPacketTest):
     """
-    Set TCP destination port 
+    Set TCP destination port
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.tcp_dst(800))]
@@ -294,7 +298,7 @@ class SetTCPDst(BaseModifyPacketTest):
 
 class SetUDPSrc(BaseModifyPacketTest):
     """
-    Set UDP source port 
+    Set UDP source port
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.udp_src(800))]
@@ -304,7 +308,7 @@ class SetUDPSrc(BaseModifyPacketTest):
 
 class SetUDPDst(BaseModifyPacketTest):
     """
-    Set UDP destination port 
+    Set UDP destination port
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.udp_dst(800))]
@@ -314,7 +318,7 @@ class SetUDPDst(BaseModifyPacketTest):
 
 class SetIPv6Src(BaseModifyPacketTest):
     """
-    Set IPv6 source address 
+    Set IPv6 source address
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ipv6_src("\x20\x01\xab\xb1\x34\x56\xbc\xcb\x00\x00\x00\x00\x03\x70\x73\x36"))]
@@ -324,7 +328,7 @@ class SetIPv6Src(BaseModifyPacketTest):
 
 class SetIPv6Dst(BaseModifyPacketTest):
     """
-    Set IPv6 destination address 
+    Set IPv6 destination address
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ipv6_dst("\x20\x01\xab\xb1\x34\x56\xbc\xcb\x00\x00\x00\x00\x03\x70\x73\x36"))]
@@ -334,7 +338,7 @@ class SetIPv6Dst(BaseModifyPacketTest):
 
 class SetIpv6Dscp(BaseModifyPacketTest):
     """
-    Set IPv6 DSCP 
+    Set IPv6 DSCP
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ip_dscp(0x01))]
@@ -354,7 +358,7 @@ class SetIpv6ECN(BaseModifyPacketTest):
 
 class SetIPv6Flabel(BaseModifyPacketTest):
     """
-    Set IPv6 Flabel 
+    Set IPv6 Flabel
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ipv6_flabel(10))]
@@ -364,7 +368,7 @@ class SetIPv6Flabel(BaseModifyPacketTest):
 
 class SetIpv6DSCP_NonZeroECNandFlabel(BaseModifyPacketTest):
     """
-    Set IPv6 DSCP and make sure ECN is not modified 
+    Set IPv6 DSCP and make sure ECN is not modified
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ip_dscp(0x01))]
@@ -384,7 +388,7 @@ class SetIpv6ECN_NonZeroDSCPandFlabel(BaseModifyPacketTest):
 
 class SetIPv6Flabel_NonZeroDSCPandECN(BaseModifyPacketTest):
     """
-    Set IPv6 Flabel 
+    Set IPv6 Flabel
     """
     def runTest(self):
         actions = [ofp.action.set_field(ofp.oxm.ipv6_flabel(10))]
@@ -394,7 +398,7 @@ class SetIPv6Flabel_NonZeroDSCPandECN(BaseModifyPacketTest):
 
 class SetIpv4TTL(BaseModifyPacketTest):
     """
-    Set IPv4 TTL 
+    Set IPv4 TTL
     """
     def runTest(self):
         actions = [ofp.action.set_nw_ttl(10)]
@@ -408,7 +412,7 @@ class SetIpv4TTL(BaseModifyPacketTest):
 
 class SetIpv6HopLimit(BaseModifyPacketTest):
     """
-    Set Ipv6 Hop Limit 
+    Set Ipv6 Hop Limit
     """
     def runTest(self):
         actions = [ofp.action.set_nw_ttl(10)]
@@ -418,7 +422,7 @@ class SetIpv6HopLimit(BaseModifyPacketTest):
 
 class DecIpv4TTL(BaseModifyPacketTest):
     """
-    Decrement Ipv4 TTL 
+    Decrement Ipv4 TTL
     """
     def runTest(self):
         actions = [ofp.action.dec_nw_ttl()]
@@ -428,7 +432,7 @@ class DecIpv4TTL(BaseModifyPacketTest):
 
 class DecIpv6HopLimit(BaseModifyPacketTest):
     """
-    Decrement Ipv6 Hop Limit 
+    Decrement Ipv6 Hop Limit
     """
     def runTest(self):
         actions = [ofp.action.dec_nw_ttl()]
