@@ -3,15 +3,15 @@ OpenFlow Test Framework
 
 Controller class
 
-Provide the interface to the control channel to the switch under test.  
+Provide the interface to the control channel to the switch under test.
 
 Class inherits from thread so as to run in background allowing
 asynchronous callbacks (if needed, not required).  Also supports
 polling.
 
 The controller thread maintains a queue.  Incoming messages that
-are not handled by a callback function are placed in this queue for 
-poll calls.  
+are not handled by a callback function are placed in this queue for
+poll calls.
 
 Callbacks and polling support specifying the message type
 
@@ -45,7 +45,7 @@ import oftest
 # Configured openflow version
 import ofp as cfg_ofp
 
-FILTER=''.join([(len(repr(chr(x)))==3) and chr(x) or '.' 
+FILTER=''.join([(len(repr(chr(x)))==3) and chr(x) or '.'
                 for x in range(256)])
 
 def hex_dump_buffer(src, length=16):
@@ -70,14 +70,14 @@ LISTEN_QUEUE_SIZE = 1
 
 class Controller(Thread):
     """
-    Class abstracting the control interface to the switch.  
+    Class abstracting the control interface to the switch.
 
     For receiving messages, two mechanism will be implemented.  First,
     query the interface with poll.  Second, register to have a
     function called by message type.  The callback is passed the
     message type as well as the raw packet (or message object)
 
-    One of the main purposes of this object is to translate between network 
+    One of the main purposes of this object is to translate between network
     and host byte order.  'Above' this object, things should be in host
     byte order.
 
@@ -92,7 +92,7 @@ class Controller(Thread):
     upon connecting to the switch
     @var switch If not None, do an active connection to the switch
     @var host The host to use for connect
-    @var port The port to connect on 
+    @var port The port to connect on
     @var packets_total Total number of packets received
     @var packets_expired Number of packets popped from queue as queue full
     @var packets_handled Number of packets handled by something
@@ -148,7 +148,7 @@ class Controller(Thread):
         self.pkt_in_dropped = 0 # Total dropped packet ins
         self.transact_to = 15 # Transact timeout default value; add to config
 
-        # Transaction and message type waiting variables 
+        # Transaction and message type waiting variables
         #   xid_cv: Condition variable (semaphore) for packet waiters
         #   xid: Transaction ID being waited on
         #   xid_response: Transaction response message
@@ -183,7 +183,7 @@ class Controller(Thread):
             # TODO dont drop expected packet ins
             if self.pkt_in_run > self.pkt_in_filter_limit:
                 self.logger.debug("Dropped %d packet ins (%d total)"
-                            % ((self.pkt_in_run - 
+                            % ((self.pkt_in_run -
                                 self.pkt_in_filter_limit),
                                 self.pkt_in_dropped))
             self.pkt_in_run = 0
@@ -194,7 +194,7 @@ class Controller(Thread):
         """
         Check for all packet handling conditions
 
-        Parse and verify message 
+        Parse and verify message
         Check if XID matches something waiting
         Check if message is being expected for a poll operation
         Check if keep alive is on and message is an echo request
@@ -359,10 +359,10 @@ class Controller(Thread):
                 except:
                     self.logger.warning("Error on switch read")
                     return -1
-      
+
                 if not self.active:
                     return 0
-      
+
                 if len(pkt) == 0:
                     self.logger.warning("Zero-length switch read, %d" % idx)
                 else:
@@ -396,7 +396,7 @@ class Controller(Thread):
             self.switch_addr = (self.switch, self.port)
             return soc
         except (StandardError, socket.error), e:
-            self.logger.error("Could not connect to %s at %d:: %s" % 
+            self.logger.error("Could not connect to %s at %d:: %s" %
                               (self.switch, self.port, str(e)))
         return None
 
@@ -483,7 +483,7 @@ class Controller(Thread):
                                    timeout=timeout)
 
         return self.switch_socket is not None
-        
+
     def disconnect(self, timeout=-1):
         """
         If connected to a switch, disconnect.
@@ -504,11 +504,11 @@ class Controller(Thread):
         """
 
         with self.connect_cv:
-            ofutils.timed_wait(self.connect_cv, 
-                               lambda: True if not self.switch_socket else None, 
+            ofutils.timed_wait(self.connect_cv,
+                               lambda: True if not self.switch_socket else None,
                                timeout=timeout)
         return self.switch_socket is None
-        
+
     def kill(self):
         """
         Force the controller thread to quit
@@ -553,13 +553,13 @@ class Controller(Thread):
 
         Only one handler may be registered for a given message type.
 
-        WARNING:  A lock is held during the handler call back, so 
+        WARNING:  A lock is held during the handler call back, so
         the handler should not make any blocking calls
 
-        @param msg_type The type of message to receive.  May be DEFAULT 
+        @param msg_type The type of message to receive.  May be DEFAULT
         for all non-handled packets.  The special type, the string "all"
         will send all packets to the handler.
-        @param handler The function to call when a message of the given 
+        @param handler The function to call when a message of the given
         type is received.
         """
         # Should check type is valid
@@ -572,7 +572,7 @@ class Controller(Thread):
         """
         Wait for the next OF message received from the switch.
 
-        @param exp_msg If set, return only when this type of message 
+        @param exp_msg If set, return only when this type of message
         is received (unless timeout occurs).
 
         @param timeout Maximum number of seconds to wait for the message.
@@ -685,7 +685,7 @@ class Controller(Thread):
             oftest.testutils.test_step_count+=1
         else:
             self.logger.info("----- Message Sent By Controller (not a test step) -----")
-    
+
         self.logger.info("%s\n", q.__str__())
 
         with self.tx_lock:

@@ -24,12 +24,21 @@ class Output(base_tests.SimpleDataPlane):
     Output to a single port
     """
     def runTest(self):
-        in_port = openflow_ports(1)
-        #in_port, out_port = openflow_ports(2)
+        #in_port, = openflow_ports(1)
+        in_port, out_port = openflow_ports(2)
+        #actions = [ofp.action.output(ofp.OFPP_CONTROLLER)]
+# temporary tweak for debugging
+        tmp = in_port
+        in_port = out_port
+        out_port = tmp
 
-        actions = [ofp.action.output(ofp.OFPP_CONTROLLER)]
-        #actions = [ofp.action.output(out_port)]
+        actions = [ofp.action.output(out_port)]
 
+        #added by jungwoo
+        print "adding a match flow....."
+        match = ofp.match([
+                        ofp.oxm.in_port(in_port)
+                                ])
         pkt = simple_tcp_packet()
 
         logging.info("Running actions test for %s", pp(actions))
@@ -39,7 +48,8 @@ class Output(base_tests.SimpleDataPlane):
         logging.info("Inserting flow")
         request = ofp.message.flow_add(
                 table_id=test_param_get("table", 0),
-                match=packet_to_flow_match(self, pkt),
+                #match=packet_to_flow_match(self, pkt[0]),
+                match=match,
                 instructions=[
                     ofp.instruction.apply_actions(actions)],
                 buffer_id=ofp.OFP_NO_BUFFER,
@@ -48,13 +58,13 @@ class Output(base_tests.SimpleDataPlane):
 
         do_barrier(self.controller)
 
-        pktstr = str(pkt)
+        pktstr = str(pkt[0])
 
-        #logging.info("Sending packet, expecting output to port %d", out_port)
-        logging.info("Sending packet, expecting output to port %d", ofp.OFPP_CONTROLLER)
+        logging.info("Sending packet, expecting output to port %d", out_port)
+        #logging.info("Sending packet, expecting output to port %d", ofp.OFPP_CONTROLLER)
         self.dataplane.send(in_port, pktstr)
+        #verify_packets(self, pktstr, [ofp.OFPP_CONTROLLER])
         verify_packets(self, pktstr, [out_port])
-        #verify_packets(self, pktstr, [out_port])
 
 class OutputMultiple(base_tests.SimpleDataPlane):
     """

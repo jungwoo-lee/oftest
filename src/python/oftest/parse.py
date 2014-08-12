@@ -22,7 +22,7 @@ def parse_ip(ip_str):
     Parse an IP address
 
     Parse an IP address '.' separated string of decimal digits to an
-    host ordered integer.  '172.24.74.77' => 
+    host ordered integer.  '172.24.74.77' =>
     @param ip_str The string to convert
     @return Integer value
     """
