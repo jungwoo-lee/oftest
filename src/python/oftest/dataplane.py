@@ -28,14 +28,15 @@ import netutils
 from pcap_writer import PcapWriter
 
 have_pypcap = False
-OFTEST_SERVER_INTERFACE = 'eth1'
+OFTEST_SERVER_INTERFACE = ['eth0','eth1','eth2','eth3','eth2.2']
 SERVER_1_ADDRESS = '150.225.16.84'
 SERVER_2_ADDRESS = '150.225.16.88'
 try:
     import pcap
     if hasattr(pcap, "pcap"):
         # the incompatible pylibpcap library masquerades as pcap
-        have_pypcap = True
+        have_pypcap = False ##(jungwoo) because of incompatibility it was disabled.
+        ##have_pypcap = True
 except:
     pass
 
@@ -124,6 +125,8 @@ def match_exp_pkt(exp_pkt, pkt):
     """
     e = str(exp_pkt)
     p = str(pkt)
+    print "expected = "+e
+    print "received = "+p
     if len(e) < 60:
         p = p[:len(e)]
     return e == p
@@ -134,7 +137,6 @@ class DataPlanePort:
     Uses raw sockets to capture and send packets on a network interface.
     """
 
-    direcConnection = 1
     RCV_SIZE_DEFAULT = 4096
     ETH_P_ALL = 0x03
     RCV_TIMEOUT = 10000
@@ -145,9 +147,9 @@ class DataPlanePort:
         """
         self.interface_name = interface_name
         self.udp_port       = udp_port
-        if interface_name == OFTEST_SERVER_INTERFACE:
+        if interface_name in OFTEST_SERVER_INTERFACE:
             try:
-                print "---- Connecting to " + interface_name  + " ..."
+                print "---- (1) Connecting to " + interface_name  + " ..."
                 self.interface_name = interface_name
                 self.socket = socket.socket(socket.AF_PACKET, socket.SOCK_RAW,socket.htons(self.ETH_P_ALL))
                 self.socket.bind((interface_name, 0))
@@ -159,7 +161,7 @@ class DataPlanePort:
             print "---- Now connected"
 
         elif interface_name == SERVER_2_ADDRESS :
-            print "---- Connecting to " + interface_name  + " ..."
+            print "---- (2) Connecting to " + interface_name  + " ..."
             try:
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
                 self.socket.bind(('', self.udp_port))
@@ -181,7 +183,12 @@ class DataPlanePort:
 
     def __del__(self):
         if self.socket:
-            self.socket.close()
+            try:
+                self.socket.close()
+            except socket.error,e:
+                print e
+                sys.exit(1)
+            print self.interface_name+"'s socket is closed"
 
     def fileno(self):
         """
@@ -208,10 +215,13 @@ class DataPlanePort:
         @retval The number of bytes sent
         """
         if self.udp_port == 0:
-            return self.socket.send(packet)
+            print "dataplane : sending a packet to "+ self.interface_name
+            ret = self.socket.send(packet)
+            print "dataplane : sending result = " + str(ret)
+            return ret
         else:
             val = 0
-            print "---- sending a packet to "+ self.interface_name+ " via "+ str(self.udp_port)
+            print "dataplane : sending a packet to "+ self.interface_name+ " via "+ str(self.udp_port)
             try:
                 val = self.socket.sendto(packet, (self.interface_name, self.udp_port))
             except socket.error, e:
@@ -456,6 +466,7 @@ class DataPlane(Thread):
         def grab():
             self.logger.debug("Grabbing packet")
             for (rcv_port_number, pkt, time) in self.packets(port_number):
+                print "packet received at "+str(time)
                 self.logger.debug("Checking packet from port %d", rcv_port_number)
                 if not exp_pkt or match_exp_pkt(exp_pkt, pkt):
             	    self.logger.debug("matched %s",format_packet(exp_pkt))

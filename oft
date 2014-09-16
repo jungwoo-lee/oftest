@@ -64,10 +64,10 @@ config_default = {
     "test_dir"           : None,
 
     # Switch connection options
-    "controller_host"    : "150.225.16.84",  # For passive bind
-    "controller_port"    : 6653,
+    "controller_host"    : "150.225.16.80",  # For passive bind
+    "controller_port"    : 6633,
     "switch_ip"          : None,  # If not none, actively connect to switch
-    # "switch_ip"          : "150.225.14.207",  # If set, the controller uses a port other than 6633, causing an error condition
+    #"switch_ip"          : "150.225.16.27",  # If set, the controller uses a port other than 6633, causing an error condition
     "platform"           : "pica8",
     "platform_args"      : None,
     "platform_dir"       : os.path.join(root_dir, "platforms"),

@@ -18,7 +18,7 @@ skipped_test_count = 0
 
 # added by jungwoo
 # variables used in generating test steps
-global test_step_count 
+global test_step_count
 test_step_count = 1
 global test_step_noneStep
 test_step_noneStep = [0, 3, 5]
@@ -75,7 +75,7 @@ def required_wildcards(parent):
     else:
         return 0
 
-def simple_tcp_packet(pktlen=100, 
+def simple_tcp_packet(pktlen=100,
                       eth_dst='00:01:02:03:04:05',
                       eth_src='00:06:07:08:09:0a',
                       dl_vlan_enable=False,
@@ -148,7 +148,7 @@ def simple_tcp_packet(pktlen=100,
                       "\t\t"+"tcp_sport = " + str(tcp_sport) + "\n" + \
                       "\t\t"+"tcp_dport = " + str(tcp_dport) + "\n" + \
                       "\t\t"+"ip_ihl = " + str(ip_ihl) + "\n" + \
-                      "\t\t"+"ip_options = " + str(ip_options) + "\n" 
+                      "\t\t"+"ip_options = " + str(ip_options) + "\n"
     L = []
     L.append(pkt)
     L.append(pkt_info)
@@ -289,7 +289,7 @@ def simple_udp_packet(pktlen=100,
                       "\t\t"+"udp_sport = " + str(udp_sport) + "\n" + \
                       "\t\t"+"udp_dport = " + str(udp_dport) + "\n" + \
                       "\t\t"+"ip_ihl = " + str(ip_ihl) + "\n" + \
-                      "\t\t"+"ip_options = " + str(ip_options) + "\n" 
+                      "\t\t"+"ip_options = " + str(ip_options) + "\n"
     print pkt_info
     L = []
     L.append(pkt)
@@ -359,7 +359,7 @@ def simple_udpv6_packet(pktlen=100,
     L.append(pkt_info)
     return L
 
-def simple_icmp_packet(pktlen=60, 
+def simple_icmp_packet(pktlen=60,
                       eth_dst='00:01:02:03:04:05',
                       eth_src='00:06:07:08:09:0a',
                       dl_vlan_enable=False,
@@ -369,7 +369,7 @@ def simple_icmp_packet(pktlen=60,
                       ip_dst='192.168.0.2',
                       ip_tos=0,
                       ip_ttl=64,
-                      ip_id=1,  
+                      ip_id=1,
                       icmp_type=8,
                       icmp_code=0,
                       icmp_data=''):
@@ -425,7 +425,7 @@ def simple_icmp_packet(pktlen=60,
                       "\t\t"+"ip_id = " + str(ip_id) + "\n" + \
                       "\t\t"+"icmp_type = " + str(icmp_type) + "\n" + \
                       "\t\t"+"icmp_code = " + str(icmp_code) + "\n" + \
-                      "\t\t"+"icmp_data = " + icmp_data + "\n" 
+                      "\t\t"+"icmp_data = " + icmp_data + "\n"
     L = []
     L.append(pkt)
     L.append(pkt_info)
@@ -488,13 +488,13 @@ def simple_icmpv6_packet(pktlen=100,
                       "\t\t"+"ipv6_hlim = " + str(ipv6_hlim) + "\n" + \
                       "\t\t"+"ipv6_fl = " + str(ipv6_fl) + "\n" + \
                       "\t\t"+"icmp_type = " + str(icmp_type) + "\n" + \
-                      "\t\t"+"icmp_code = " + str(icmp_code) + "\n" 
+                      "\t\t"+"icmp_code = " + str(icmp_code) + "\n"
     L = []
     L.append(pkt)
     L.append(pkt_info)
     return L
 
-def simple_arp_packet(pktlen=60, 
+def simple_arp_packet(pktlen=60,
                       eth_dst='ff:ff:ff:ff:ff:ff',
                       eth_src='00:06:07:08:09:0a',
                       vlan_vid=0,
@@ -541,7 +541,7 @@ def simple_arp_packet(pktlen=60,
                       "\t\t"+"ip_snd = " + str(ip_snd) + "\n" + \
                       "\t\t"+"ip_tgt = " + str(ip_tgt) + "\n" + \
                       "\t\t"+"hw_snd = " + str(hw_snd) + "\n" + \
-                      "\t\t"+"hw_tgt = " + str(hw_tgt) + "\n" 
+                      "\t\t"+"hw_tgt = " + str(hw_tgt) + "\n"
     L = []
     L.append(pkt)
     L.append(pkt_info)
@@ -561,7 +561,7 @@ def simple_eth_packet(pktlen=60,
 
     return pkt
 
-def qinq_tcp_packet(pktlen=100, 
+def qinq_tcp_packet(pktlen=100,
                     eth_dst='00:01:02:03:04:05',
                     eth_src='00:06:07:08:09:0a',
                     dl_vlan_outer=20,
@@ -661,7 +661,7 @@ def port_config_get(controller, port_no):
     for port in ports:
         if port.port_no == port_no:
             return (port.hw_addr, port.config, port.advertised)
-    
+
     logging.warn("Did not find port number for port config")
     return None, None, None
 
@@ -706,7 +706,7 @@ def receive_pkt_check(dp, pkt, yes_ports, no_ports, assert_if):
         logging.debug("Checking for pkt on port " + str(ofport))
         (rcv_port, rcv_pkt, pkt_time) = dp.poll(
             port_number=ofport, exp_pkt=exp_pkt_arg)
-        assert_if.assertTrue(rcv_pkt is not None, 
+        assert_if.assertTrue(rcv_pkt is not None,
                              "Did not receive pkt on " + str(ofport))
         if not oftest.dataplane.match_exp_pkt(pkt, rcv_pkt):
             logging.debug("Expected %s" % format_packet(pkt))
@@ -720,7 +720,7 @@ def receive_pkt_check(dp, pkt, yes_ports, no_ports, assert_if):
         logging.debug("Negative check for pkt on port " + str(ofport))
         (rcv_port, rcv_pkt, pkt_time) = dp.poll(
             port_number=ofport, timeout=0, exp_pkt=exp_pkt_arg)
-        assert_if.assertTrue(rcv_pkt is None, 
+        assert_if.assertTrue(rcv_pkt is None,
                              "Unexpected pkt on port " + str(ofport))
 
 
@@ -751,12 +751,12 @@ def receive_pkt_verify(parent, egr_ports, exp_pkt, ing_port):
             port_number=check_port, exp_pkt=exp_pkt_arg)
 
         if rcv_pkt is None:
-            logging.error("ERROR: No packet received from " + 
+            logging.error("ERROR: No packet received from " +
                                 str(check_port))
 
         parent.assertTrue(rcv_pkt is not None,
                           "Did not receive packet port " + str(check_port))
-        logging.debug("Packet len " + str(len(rcv_pkt)) + " in on " + 
+        logging.debug("Packet len " + str(len(rcv_pkt)) + " in on " +
                             str(rcv_port))
 
         if str(exp_pkt) != str(rcv_pkt):
@@ -794,8 +794,8 @@ def match_verify(parent, req_match, res_match):
                        'Match failed: vlan_vid: ' + str(req_match.vlan_vid) +
                        " != " + str(res_match.vlan_vid))
     parent.assertEqual(req_match.vlan_pcp, res_match.vlan_pcp,
-                       'Match failed: vlan_pcp: ' + 
-                       str(req_match.vlan_pcp) + " != " + 
+                       'Match failed: vlan_pcp: ' +
+                       str(req_match.vlan_pcp) + " != " +
                        str(res_match.vlan_pcp))
     parent.assertEqual(req_match.eth_type, res_match.eth_type,
                        'Match failed: eth_type: ' + str(req_match.eth_type) +
@@ -820,11 +820,11 @@ def match_verify(parent, req_match, res_match):
             and ((req_match.ip_proto == TCP_PROTOCOL)
                  or (req_match.ip_proto == UDP_PROTOCOL))):
             parent.assertEqual(req_match.tcp_src, res_match.tcp_src,
-                               'Match failed: tcp_src: ' + 
+                               'Match failed: tcp_src: ' +
                                str(req_match.tcp_src) +
                                " != " + str(res_match.tcp_src))
             parent.assertEqual(req_match.tcp_dst, res_match.tcp_dst,
-                               'Match failed: tcp_dst: ' + 
+                               'Match failed: tcp_dst: ' +
                                str(req_match.tcp_dst) +
                                " != " + str(res_match.tcp_dst))
 
@@ -842,7 +842,7 @@ def flow_msg_create(parent, pkt, ing_port=None, action_list=None, wildcards=None
     """
     Create a flow message
 
-    Match on packet with given wildcards.  
+    Match on packet with given wildcards.
     See flow_match_test for other parameter descriptoins
     @param egr_queue if not None, make the output an enqueue action
     @param in_band if True, do not wildcard ingress port
@@ -909,7 +909,7 @@ def flow_msg_install(parent, request, clear_table_override=None):
     if(clear_table_override != None):
         clear_table = clear_table_override
 
-    if clear_table: 
+    if clear_table:
         logging.debug("Clear flow table")
         delete_all_flows(parent.controller)
 
@@ -931,7 +931,7 @@ def flow_match_test_port_pair(parent, ing_port, egr_ports, wildcards=None,
 
     if wildcards is None:
         wildcards = required_wildcards(parent)
-    logging.info("Pkt match test: " + str(ing_port) + " to " + 
+    logging.info("Pkt match test: " + str(ing_port) + " to " +
                        str(egr_ports))
     logging.debug("  WC: " + hex(wildcards) + " vlan: " + str(vlan_vid))
     if pkt is None:
@@ -939,13 +939,13 @@ def flow_match_test_port_pair(parent, ing_port, egr_ports, wildcards=None,
     if exp_pkt is None:
         exp_pkt = pkt
 
-    request = flow_msg_create(parent, pkt, ing_port=ing_port, 
+    request = flow_msg_create(parent, pkt, ing_port=ing_port,
                               wildcards=wildcards, egr_ports=egr_ports,
                               action_list=action_list)
 
     flow_msg_install(parent, request)
 
-    logging.debug("Send packet: " + str(ing_port) + " to " + 
+    logging.debug("Send packet: " + str(ing_port) + " to " +
                         str(egr_ports))
     parent.dataplane.send(ing_port, str(pkt))
 
@@ -1005,7 +1005,7 @@ def get_egr_list(parent, of_ports, how_many, exclude_list=[]):
 
     count = 0
     egr_ports = []
-    for egr_idx in range(len(of_ports)): 
+    for egr_idx in range(len(of_ports)):
         if of_ports[egr_idx] not in exclude_list:
             egr_ports.append(of_ports[egr_idx])
             count += 1
@@ -1013,8 +1013,8 @@ def get_egr_list(parent, of_ports, how_many, exclude_list=[]):
                 return egr_ports
     logging.debug("Could not generate enough egress ports for test")
     return []
-    
-def flow_match_test(parent, port_map, wildcards=None, vlan_vid=-1, pkt=None, 
+
+def flow_match_test(parent, port_map, wildcards=None, vlan_vid=-1, pkt=None,
                     exp_pkt=None, action_list=None,
                     max_test=0, egr_count=1, ing_port=False):
     """
@@ -1039,18 +1039,18 @@ def flow_match_test(parent, port_map, wildcards=None, vlan_vid=-1, pkt=None,
 
     if egr_count == -1:
         egr_count = test_param_get('egr_count', default=2)
-    
+
     for ing_idx in range(len(of_ports)):
         ingress_port = of_ports[ing_idx]
-        egr_ports = get_egr_list(parent, of_ports, egr_count, 
+        egr_ports = get_egr_list(parent, of_ports, egr_count,
                                  exclude_list=[ingress_port])
         if ing_port:
             egr_ports.append(ofp.OFPP_IN_PORT)
         if len(egr_ports) == 0:
             parent.assertTrue(0, "Failed to generate egress port list")
 
-        flow_match_test_port_pair(parent, ingress_port, egr_ports, 
-                                  wildcards=wildcards, vlan_vid=vlan_vid, 
+        flow_match_test_port_pair(parent, ingress_port, egr_ports,
+                                  wildcards=wildcards, vlan_vid=vlan_vid,
                                   pkt=pkt, exp_pkt=exp_pkt,
                                   action_list=action_list)
         test_count += 1
@@ -1082,7 +1082,7 @@ def test_param_get(key, default=None):
     on the command line, return val (as interpreted by exec).  Otherwise
     return default value.
 
-    WARNING: TEST PARAMETERS MUST BE PYTHON IDENTIFIERS; 
+    WARNING: TEST PARAMETERS MUST BE PYTHON IDENTIFIERS;
     eg egr_count, not egr-count.
     """
     try:
@@ -1152,7 +1152,7 @@ def action_generate(parent, field_to_mod, mod_field_vals):
 
     return act
 
-def pkt_action_setup(parent, start_field_vals={}, mod_field_vals={}, 
+def pkt_action_setup(parent, start_field_vals={}, mod_field_vals={},
                      mod_fields=[], tp="tcp", check_test_params=False):
     """
     Set up the ingress and expected packet and action list for a test
@@ -1292,7 +1292,7 @@ def all_stats_get(parent):
     """
     Get the aggregate stats for all flows in the table
     @param parent Test instance with controller connection and assert
-    @returns dict with keys flows, packets, bytes, active (flows), 
+    @returns dict with keys flows, packets, bytes, active (flows),
     lookups, matched
     """
     stat_req = ofp.message.aggregate_stats_request()
@@ -1307,14 +1307,14 @@ def all_stats_get(parent):
     parent.assertTrue(len(reply.entries) == 1, "Did not receive flow stats reply")
 
     for obj in reply.entries:
-        (rv["flows"], rv["packets"], rv["bytes"]) = (obj.flow_count, 
+        (rv["flows"], rv["packets"], rv["bytes"]) = (obj.flow_count,
                                                   obj.packet_count, obj.byte_count)
         break
 
     request = ofp.message.table_stats_request()
     (reply , pkt) = parent.controller.transact(request)
 
-    
+
     (rv["active"], rv["lookups"], rv["matched"]) = (0,0,0)
     for obj in reply.entries:
         rv["active"] += obj.active_count
@@ -1324,7 +1324,7 @@ def all_stats_get(parent):
     return rv
 
 _import_blacklist.add('FILTER')
-FILTER=''.join([(len(repr(chr(x)))==3) and chr(x) or '.' 
+FILTER=''.join([(len(repr(chr(x)))==3) and chr(x) or '.'
                 for x in range(256)])
 
 def hex_dump_buffer(src, length=16):
@@ -1344,7 +1344,7 @@ def hex_dump_buffer(src, length=16):
     return ''.join(result)
 
 def format_packet(pkt):
-    return "Packet length %d \n%s" % (len(str(pkt)), 
+    return "Packet length %d \n%s" % (len(str(pkt)),
                                       hex_dump_buffer(str(pkt)))
 
 def inspect_packet(pkt):
@@ -1809,9 +1809,9 @@ def verify_packets(test, pkt, ofports):
     for ofport in openflow_ports():
         if ofport in ofports:
             verify_packet(test, pkt, ofport)
-        # else:
-            # verify_no_packet(test, pkt, ofport)
-    # verify_no_other_packets(test)
+        else:
+            verify_no_packet(test, pkt, ofport)
+    verify_no_other_packets(test)
 
 def verify_no_errors(ctrl):
     error, _ = ctrl.poll(ofp.OFPT_ERROR, 0)
@@ -1829,7 +1829,7 @@ def verify_capability(test, capability):
     test.assertIn(capability, ofp.const.ofp_capabilities_map,
                   "Capability code %d does not exist." % capability)
     capability_str = ofp.const.ofp_capabilities_map[capability]
-    
+
     logging.info(("Sending features_request to test if capability "
                   "%s is supported."), capability_str)
     req = ofp.message.features_request()
@@ -1839,7 +1839,7 @@ def verify_capability(test, capability):
                      ("Unexpected packet type %d received in response to "
                       "OFPT_FEATURES_REQUEST") % res.type)
     logging.info("Received features_reply.")
-    
+
     if (res.capabilities & capability) > 0:
         logging.info("Switch capabilities bitmask claims to support %s",
                      capability_str)
@@ -1862,7 +1862,7 @@ def verify_configuration_flag(test, flag):
                   "flag  %s does not exist." % flag)
     flag_str = ofp.const.ofp_config_flags_map[flag]
 
-    logging.info("Sending OFPT_GET_CONFIG_REQUEST.")    
+    logging.info("Sending OFPT_GET_CONFIG_REQUEST.")
     req = ofp.message.get_config_request()
     rv = test.controller.message_send(req)
     test.assertNotEqual(rv, -1, "Not able to send get_config_request.")

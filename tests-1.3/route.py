@@ -28,11 +28,6 @@ class Output(base_tests.SimpleDataPlane):
         #in_port, = openflow_ports(1)
         print "adding ports"
         in_port, out_port = openflow_ports(2)
-        #actions = [ofp.action.output(ofp.OFPP_CONTROLLER)]
-# temporary tweak for debugging
-        #tmp = in_port
-        #in_port = out_port
-        #out_port = tmp
 
         print "in_port = "+str(in_port)
         print "out_port = "+str(out_port)

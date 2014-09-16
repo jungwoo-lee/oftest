@@ -1,0 +1,134 @@
+16:36:39.534  root      : INFO    : ** START TEST CASE actions.SetIPv6Flabel
+16:36:39.534  controller: INFO    : Create/listen at 150.225.16.80:6633
+16:36:42.573  controller: INFO    : 150.225.16.80:6633: Incoming connection from ('150.225.16.27', 56057)
+16:36:42.573  controller: DEBUG   : Msg out: version 4 class hello len 8 xid 2281222461
+16:36:42.573  controller: DEBUG   : (message type = 0)
+16:36:42.573  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+16:36:42.573  controller: INFO    : hello { xid = 0x87f8b13d, elements = [ ] }
+
+16:36:42.573  controller: DEBUG   : Msg in: version 4 class hello len 8 xid 302
+16:36:42.602  root      : INFO    : Connected ('150.225.16.27', 56057)
+16:36:42.602  controller: DEBUG   : Running transaction 3255607364
+16:36:42.602  controller: DEBUG   : Msg out: version 4 class features_request len 8 xid 3255607364
+16:36:42.602  controller: DEBUG   : (message type = 5)
+16:36:42.602  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+16:36:42.602  controller: INFO    : features_request { xid = 0xc20ca044 }
+
+16:36:42.602  controller: DEBUG   : Waiting for transaction 3255607364
+16:36:42.603  controller: DEBUG   : Msg in: version 4 class features_reply len 32 xid 3255607364
+16:36:42.603  controller: DEBUG   : Matched expected XID 3255607364
+16:36:42.609  root      : INFO    : Running actions test for [
+  set_field { field = ipv6_flabel { value = 0xa } },
+  output { port = 8, max_len = 0x0 }
+]
+16:36:42.609  root      : INFO    : (Deleting all flows)
+16:36:42.610  controller: DEBUG   : Msg out: version 4 class flow_delete len 56 xid 1568851084
+16:36:42.610  controller: DEBUG   : (message type = 14)
+16:36:42.610  controller: INFO    : ----- Test Step 1 -----
+16:36:42.610  controller: INFO    : flow_delete {
+  xid = 0x5d82c48c,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0xff,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x0,
+  buffer_id = 0xffffffff,
+  out_port = OFPP_ANY,
+  out_group = 0xffffffff,
+  flags = 0x0,
+  match = match_v3 { oxm_list = [ ] },
+  instructions = [ ]
+}
+
+16:36:42.610  controller: DEBUG   : Running transaction 1481183822
+16:36:42.610  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 1481183822
+16:36:42.610  controller: DEBUG   : (message type = 20)
+16:36:42.610  controller: INFO    : ----- Test Step 2 -----
+16:36:42.610  controller: INFO    : barrier_request { xid = 0x5849124e }
+
+16:36:42.611  controller: DEBUG   : Waiting for transaction 1481183822
+16:36:42.613  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 1481183822
+16:36:42.613  controller: DEBUG   : Matched expected XID 1481183822
+16:36:42.614  root      : INFO    : Inserting flow
+16:36:42.614  controller: DEBUG   : Msg out: version 4 class flow_add len 200 xid 2029741813
+16:36:42.615  controller: DEBUG   : (message type = 14)
+16:36:42.615  controller: INFO    : ----- Test Step 3 -----
+16:36:42.615  controller: INFO    : flow_add {
+  xid = 0x78fb66f5,
+  cookie = 0x0,
+  cookie_mask = 0x0,
+  table_id = 0x0,
+  idle_timeout = 0x0,
+  hard_timeout = 0x0,
+  priority = 0x3e8,
+  buffer_id = 0xffffffff,
+  out_port = 0,
+  out_group = 0x0,
+  flags = 0x0,
+  match = match_v3 {
+    oxm_list = [
+      eth_dst { value = 00:01:02:03:04:05 },
+      eth_src { value = 00:06:07:08:09:0a },
+      eth_type { value = 0x86dd },
+      ip_proto { value = 0x6 },
+      ip_dscp { value = 0x0 },
+      ip_ecn { value = 0x0 },
+      ipv6_src { value = ' \x01\r\xb8\x85\xa3\x00\x00\x00\x00\x8a.\x03ps4' },
+      ipv6_dst { value = ' \x01\r\xb8\x85\xa3\x00\x00\x00\x00\x8a.\x03ps5' },
+      ipv6_flabel { value = 0x0 },
+      tcp_src { value = 0x4d2 },
+      tcp_dst { value = 0x50 }
+    ]
+  },
+  instructions = [ apply_actions { actions = [ set_field { field = ipv6_flabel { value = 0xa } }, output { port = 8, max_len = 0x0 } ] } ]
+}
+
+16:36:42.615  controller: DEBUG   : Running transaction 3813809895
+16:36:42.615  controller: DEBUG   : Msg out: version 4 class barrier_request len 8 xid 3813809895
+16:36:42.616  controller: DEBUG   : (message type = 20)
+16:36:42.616  controller: INFO    : ----- Test Step 4 -----
+16:36:42.616  controller: INFO    : barrier_request { xid = 0xe3521ee7 }
+
+16:36:42.616  controller: DEBUG   : Waiting for transaction 3813809895
+16:36:42.623  controller: DEBUG   : Msg in: version 4 class bad_action_error_msg len 76 xid 2029741813
+16:36:42.623  controller: WARNING : Received error message: xid=2029741813 type=OFPET_BAD_ACTION (2) code=OFPBAC_BAD_SET_ARGUMENT (15)
+16:36:42.624  controller: DEBUG   : Msg in: version 4 class barrier_reply len 8 xid 3813809895
+16:36:42.624  controller: DEBUG   : Matched expected XID 3813809895
+16:36:42.631  root      : INFO    : Sending packet, expecting output to port 8
+16:36:47.573  controller: DEBUG   : Msg in: version 4 class echo_request len 8 xid 0
+16:36:47.573  controller: DEBUG   : Responding to echo request
+16:36:47.573  controller: DEBUG   : Msg out: version 4 class echo_reply len 8 xid 0
+16:36:47.573  controller: DEBUG   : (message type = 3)
+16:36:47.573  controller: INFO    : ----- Message Sent By Controller (not a test step) -----
+16:36:47.573  controller: INFO    : echo_reply { xid = 0x0, data = '' }
+
+16:36:47.637  dataplane : DEBUG   : Sending 100 bytes to port 6
+16:36:47.638  root      : DEBUG   : Negative check for pkt on port 6
+16:36:47.638  dataplane : DEBUG   : Grabbing packet
+16:36:47.638  dataplane : DEBUG   : Out of packets on port 6
+16:36:47.638  dataplane : DEBUG   : Did not find packet
+16:36:47.648  dataplane : DEBUG   : Poll time out, no packet from 6
+16:36:47.648  root      : DEBUG   : Checking for pkt on port 8
+16:36:47.649  root      : INFO    : ----- Test Step 5 -----
+16:36:47.649  root      : INFO    : Verify the packet in port 8
+
+16:36:47.649  dataplane : DEBUG   : Grabbing packet
+16:36:47.649  dataplane : DEBUG   : Out of packets on port 8
+16:36:47.649  dataplane : DEBUG   : Did not find packet
+16:36:48.563  dataplane : DEBUG   : Grabbing packet
+16:36:48.564  dataplane : DEBUG   : Out of packets on port 8
+16:36:48.564  dataplane : DEBUG   : Did not find packet
+16:36:49.578  dataplane : DEBUG   : Grabbing packet
+16:36:49.578  dataplane : DEBUG   : Out of packets on port 8
+16:36:49.579  dataplane : DEBUG   : Did not find packet
+16:36:49.649  dataplane : DEBUG   : Poll time out, no packet from 8
+16:36:49.649  root      : ERROR   : ** FAILED ASSERTION: Did not receive pkt on 8
+16:36:49.649  controller: INFO    : Ignoring listen soc shutdown error
+16:36:49.649  controller: ERROR   : Unknown socket ready: <socket._socketobject object at 0x2d74210>
+16:36:49.650  controller: INFO    : Exiting controller thread
+16:36:49.650  controller: INFO    : Ignoring switch soc shutdown error
+16:36:49.650  controller: INFO    : Ignoring listen soc shutdown error
+16:36:49.650  root      : INFO    : ** END TEST CASE actions.SetIPv6Flabel
+16:36:49.650  root      : INFO    : *** TEST RUN END  : Thu Sep 11 16:36:49 2014
+16:36:49.650  dataplane : INFO    : Thread exit

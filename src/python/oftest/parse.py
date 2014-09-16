@@ -194,7 +194,7 @@ def packet_to_flow_match_oxm(packet, ofp):
             match.oxm_list.append(ofp.oxm.vlan_pcp(layer.prio))
         else:
             match.oxm_list.append(ofp.oxm.eth_type(layer.type))
-            match.oxm_list.append(ofp.oxm.vlan_vid(ofp.OFP_VLAN_NONE))
+            ##match.oxm_list.append(ofp.oxm.vlan_vid(ofp.OFP_VLAN_NONE))
 
         if type(layer.payload) == scapy.IP:
             parse_ipv4_layer(layer.payload, match)
